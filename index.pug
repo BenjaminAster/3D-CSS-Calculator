@@ -1,0 +1,39 @@
+
+link(rel="stylesheet" href="./style.css")
+
+- const checkboxCount = 16;
+
+section.addition
+	for val, i in Array(checkboxCount)
+		input(type="checkbox" id=`check-first-${checkboxCount - 1 - i}`)
+
+	for val, i in Array(checkboxCount)
+		input(type="checkbox" id=`check-second-${checkboxCount - 1 - i}`)
+	
+	.labels.first-labels
+		span.placeholder &nbsp;
+		for val, i in Array(checkboxCount)
+			span: label(for=`check-first-${checkboxCount - 1 - i}`)
+
+	span.number-display.first
+
+	.operator +
+
+	.labels.second-labels
+		span.placeholder &nbsp;
+		for val, i in Array(checkboxCount)
+			span: label(for=`check-second-${checkboxCount - 1 - i}`)
+
+	span.number-display.second
+
+	.operator =
+
+	span.result-display: .bits
+		for val, i in Array(checkboxCount + 1)
+			span(class=`show-check check-${checkboxCount - i}`)
+				span.digit-0 0
+				span.digit-1 1
+	
+	span.number-display.sum
+
+
