@@ -10,25 +10,35 @@ section.addition
 
 	for row, rowIdx in ["first", "second"]
 		.labels(class=`${row}-labels`)
-			span.placeholder &nbsp;
+			span: span.placeholder
+				.side.front
+				.side.back
+				.side.left
+				.side.right
+				.side.top
+				.side.bottom
 			for val, i in Array(checkboxCount)
 				span: label(for=`check-${row}-${checkboxCount - 1 - i}`)
-					.front
-					.back
-					.left
-					.right
-					.top
-					.bottom
+					.side.front
+					.side.back
+					.side.left
+					.side.right
+					.side.top
+					.side.bottom
 
 		span.number-display(class=row)
 
 		.operator #{rowIdx ? "=" : "+"}
 
-	span.result-display: .bits
+	span.result-display
 		for val, i in Array(checkboxCount + 1)
-			span.show-check(class=`check-${checkboxCount - i}`)
-				span.digit-0 0
-				span.digit-1 1
+			span: span.show-check(class=`check-${checkboxCount - i}`)
+				.side.front
+				.side.back
+				.side.left
+				.side.right
+				.side.top
+				.side.bottom
 	
 	span.number-display.sum
 

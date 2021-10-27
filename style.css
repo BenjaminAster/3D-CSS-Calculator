@@ -5,21 +5,15 @@
 body {
   font-family: sans-serif;
   background-color: black;
-  font-size: 1.5rem;
+  font-size: 1.5vw;
   perspective: 30em;
   perspective-origin: 50% calc(50% - 2em);
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
 }
 body * {
   transform-style: preserve-3d;
-}
-
-* {
-  color: white;
-  background: transparent;
 }
 
 a {
@@ -53,34 +47,95 @@ section.addition .number-display.sum::after {
 section.addition input[type=checkbox] {
   position: absolute;
   z-index: -1;
-  opacity: 0;
+  visibility: hidden;
 }
 section.addition .labels {
   display: inline-flex;
   flex-wrap: wrap;
   gap: 1em;
 }
-section.addition .labels span {
+section.addition .labels > span {
   display: inline-block;
   width: 2em;
   height: 2em;
 }
-section.addition .labels label[for] {
+section.addition .labels > span label[for],
+section.addition .labels > span .placeholder {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  --global-transform: rotateX(calc(var(--is-one) * 90deg));
+  --is-one: 0;
   padding: 1em;
   width: 2em;
   height: 2em;
   color: black;
-  --is-one: 0;
 }
-section.addition .labels label[for] .left,
-section.addition .labels label[for] .right,
-section.addition .labels label[for] .front,
-section.addition .labels label[for] .back,
-section.addition .labels label[for] .top,
-section.addition .labels label[for] .bottom {
+section.addition .labels > span label[for] .front::before {
+  content: "0";
+}
+section.addition .labels > span label[for] .bottom::before {
+  content: "1";
+}
+section.addition .labels > span .side {
+  position: absolute;
+  width: 2em;
+  height: 2em;
+  background: rgba(173, 216, 230, 0.6);
+  box-shadow: 0 0 0.5em #000a inset;
+  transition: transform 250ms ease-in-out;
+}
+section.addition .labels > span .side::before {
+  width: 100%;
+  height: 100%;
+  color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+section.addition .labels > span .front {
+  transform: var(--global-transform) translateZ(1em);
+}
+section.addition .labels > span .right {
+  transform: var(--global-transform) rotateY(90deg) translateZ(1em);
+}
+section.addition .labels > span .back {
+  transform: var(--global-transform) rotateY(180deg) translateZ(1em);
+}
+section.addition .labels > span .left {
+  transform: var(--global-transform) rotateY(-90deg) translateZ(1em);
+}
+section.addition .labels > span .top {
+  transform: var(--global-transform) translateY(-1em) rotateX(90deg);
+}
+section.addition .labels > span .bottom {
+  transform: var(--global-transform) translateY(1em) rotateX(90deg) rotateZ(180deg) rotateY(180deg);
+}
+section.addition .result-display {
+  --col-bg: white;
+  --col-fg: black;
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 1em;
+}
+section.addition .result-display > span {
+  display: inline-block;
+  width: 2em;
+  height: 2em;
+}
+section.addition .result-display > span span.show-check {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2em;
+  height: 2em;
+  color: black;
+  padding: 1em;
+  --is-one: 0;
+  width: 2em;
+  height: 2em;
+}
+section.addition .result-display > span span.show-check .side {
   position: absolute;
   width: 2em;
   height: 2em;
@@ -89,12 +144,7 @@ section.addition .labels label[for] .bottom {
   --global-transform: rotateX(calc(var(--is-one) * 90deg));
   transition: transform 250ms ease-in-out;
 }
-section.addition .labels label[for] .left::before,
-section.addition .labels label[for] .right::before,
-section.addition .labels label[for] .front::before,
-section.addition .labels label[for] .back::before,
-section.addition .labels label[for] .top::before,
-section.addition .labels label[for] .bottom::before {
+section.addition .result-display > span span.show-check .side::before {
   width: 100%;
   height: 100%;
   color: black;
@@ -102,53 +152,29 @@ section.addition .labels label[for] .bottom::before {
   justify-content: center;
   align-items: center;
 }
-section.addition .labels label[for] .front {
+section.addition .result-display > span span.show-check .front {
   transform: var(--global-transform) translateZ(1em);
 }
-section.addition .labels label[for] .front::before {
+section.addition .result-display > span span.show-check .front::before {
   content: "0";
 }
-section.addition .labels label[for] .right {
+section.addition .result-display > span span.show-check .right {
   transform: var(--global-transform) rotateY(90deg) translateZ(1em);
 }
-section.addition .labels label[for] .back {
+section.addition .result-display > span span.show-check .back {
   transform: var(--global-transform) rotateY(180deg) translateZ(1em);
 }
-section.addition .labels label[for] .left {
+section.addition .result-display > span span.show-check .left {
   transform: var(--global-transform) rotateY(-90deg) translateZ(1em);
 }
-section.addition .labels label[for] .top {
+section.addition .result-display > span span.show-check .top {
   transform: var(--global-transform) translateY(-1em) rotateX(90deg);
 }
-section.addition .labels label[for] .bottom {
+section.addition .result-display > span span.show-check .bottom {
   transform: var(--global-transform) translateY(1em) rotateX(90deg) rotateZ(180deg) rotateY(180deg);
 }
-section.addition .labels label[for] .bottom::before {
+section.addition .result-display > span span.show-check .bottom::before {
   content: "1";
-}
-section.addition .result-display {
-  --col-bg: white;
-  --col-fg: black;
-}
-section.addition .result-display div.bits {
-  display: inline-flex;
-  flex-wrap: wrap;
-  gap: 2px;
-}
-section.addition .result-display div.bits span.show-check {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 2em;
-  height: 2em;
-  --gap: 10em;
-  --char-width: 0.5em;
-  gap: var(--gap);
-  clip-path: inset(0);
-  background-color: var(--col-bg);
-}
-section.addition .result-display div.bits span.show-check span.digit-0, section.addition .result-display div.bits span.show-check span.digit-1 {
-  color: var(--col-fg);
 }
 section.addition input#check-first-0:checked ~ input#check-second-0:checked ~ .result-display {
   --check-0-sum: 0;
@@ -181,11 +207,8 @@ section.addition input#check-second-0:checked ~ .second-labels label[for=check-s
 section.addition .result-display {
   --check-16-sum: var(--check-15-carry);
 }
-section.addition .result-display div.bits span.show-check.check-0 span.digit-0 {
-  padding-left: calc( 									(1 - var(--check-0-sum)) * 										(var(--gap) + var(--char-width)) 								);
-}
-section.addition .result-display div.bits span.show-check.check-0 span.digit-1 {
-  padding-right: calc( 									(0 + var(--check-0-sum)) * 										(var(--gap) + var(--char-width)) 								);
+section.addition .result-display > span span.show-check.check-0 {
+  --is-one: var(--check-0-sum);
 }
 section.addition input#check-first-1:checked ~ input#check-second-1:checked ~ .result-display {
   --check-1-sum: calc(var(--check-0-carry));
@@ -218,11 +241,8 @@ section.addition input#check-second-1:checked ~ .second-labels label[for=check-s
 section.addition .result-display {
   --check-16-sum: var(--check-15-carry);
 }
-section.addition .result-display div.bits span.show-check.check-1 span.digit-0 {
-  padding-left: calc( 									(1 - var(--check-1-sum)) * 										(var(--gap) + var(--char-width)) 								);
-}
-section.addition .result-display div.bits span.show-check.check-1 span.digit-1 {
-  padding-right: calc( 									(0 + var(--check-1-sum)) * 										(var(--gap) + var(--char-width)) 								);
+section.addition .result-display > span span.show-check.check-1 {
+  --is-one: var(--check-1-sum);
 }
 section.addition input#check-first-2:checked ~ input#check-second-2:checked ~ .result-display {
   --check-2-sum: calc(var(--check-1-carry));
@@ -255,11 +275,8 @@ section.addition input#check-second-2:checked ~ .second-labels label[for=check-s
 section.addition .result-display {
   --check-16-sum: var(--check-15-carry);
 }
-section.addition .result-display div.bits span.show-check.check-2 span.digit-0 {
-  padding-left: calc( 									(1 - var(--check-2-sum)) * 										(var(--gap) + var(--char-width)) 								);
-}
-section.addition .result-display div.bits span.show-check.check-2 span.digit-1 {
-  padding-right: calc( 									(0 + var(--check-2-sum)) * 										(var(--gap) + var(--char-width)) 								);
+section.addition .result-display > span span.show-check.check-2 {
+  --is-one: var(--check-2-sum);
 }
 section.addition input#check-first-3:checked ~ input#check-second-3:checked ~ .result-display {
   --check-3-sum: calc(var(--check-2-carry));
@@ -292,11 +309,8 @@ section.addition input#check-second-3:checked ~ .second-labels label[for=check-s
 section.addition .result-display {
   --check-16-sum: var(--check-15-carry);
 }
-section.addition .result-display div.bits span.show-check.check-3 span.digit-0 {
-  padding-left: calc( 									(1 - var(--check-3-sum)) * 										(var(--gap) + var(--char-width)) 								);
-}
-section.addition .result-display div.bits span.show-check.check-3 span.digit-1 {
-  padding-right: calc( 									(0 + var(--check-3-sum)) * 										(var(--gap) + var(--char-width)) 								);
+section.addition .result-display > span span.show-check.check-3 {
+  --is-one: var(--check-3-sum);
 }
 section.addition input#check-first-4:checked ~ input#check-second-4:checked ~ .result-display {
   --check-4-sum: calc(var(--check-3-carry));
@@ -329,11 +343,8 @@ section.addition input#check-second-4:checked ~ .second-labels label[for=check-s
 section.addition .result-display {
   --check-16-sum: var(--check-15-carry);
 }
-section.addition .result-display div.bits span.show-check.check-4 span.digit-0 {
-  padding-left: calc( 									(1 - var(--check-4-sum)) * 										(var(--gap) + var(--char-width)) 								);
-}
-section.addition .result-display div.bits span.show-check.check-4 span.digit-1 {
-  padding-right: calc( 									(0 + var(--check-4-sum)) * 										(var(--gap) + var(--char-width)) 								);
+section.addition .result-display > span span.show-check.check-4 {
+  --is-one: var(--check-4-sum);
 }
 section.addition input#check-first-5:checked ~ input#check-second-5:checked ~ .result-display {
   --check-5-sum: calc(var(--check-4-carry));
@@ -366,11 +377,8 @@ section.addition input#check-second-5:checked ~ .second-labels label[for=check-s
 section.addition .result-display {
   --check-16-sum: var(--check-15-carry);
 }
-section.addition .result-display div.bits span.show-check.check-5 span.digit-0 {
-  padding-left: calc( 									(1 - var(--check-5-sum)) * 										(var(--gap) + var(--char-width)) 								);
-}
-section.addition .result-display div.bits span.show-check.check-5 span.digit-1 {
-  padding-right: calc( 									(0 + var(--check-5-sum)) * 										(var(--gap) + var(--char-width)) 								);
+section.addition .result-display > span span.show-check.check-5 {
+  --is-one: var(--check-5-sum);
 }
 section.addition input#check-first-6:checked ~ input#check-second-6:checked ~ .result-display {
   --check-6-sum: calc(var(--check-5-carry));
@@ -403,11 +411,8 @@ section.addition input#check-second-6:checked ~ .second-labels label[for=check-s
 section.addition .result-display {
   --check-16-sum: var(--check-15-carry);
 }
-section.addition .result-display div.bits span.show-check.check-6 span.digit-0 {
-  padding-left: calc( 									(1 - var(--check-6-sum)) * 										(var(--gap) + var(--char-width)) 								);
-}
-section.addition .result-display div.bits span.show-check.check-6 span.digit-1 {
-  padding-right: calc( 									(0 + var(--check-6-sum)) * 										(var(--gap) + var(--char-width)) 								);
+section.addition .result-display > span span.show-check.check-6 {
+  --is-one: var(--check-6-sum);
 }
 section.addition input#check-first-7:checked ~ input#check-second-7:checked ~ .result-display {
   --check-7-sum: calc(var(--check-6-carry));
@@ -440,11 +445,8 @@ section.addition input#check-second-7:checked ~ .second-labels label[for=check-s
 section.addition .result-display {
   --check-16-sum: var(--check-15-carry);
 }
-section.addition .result-display div.bits span.show-check.check-7 span.digit-0 {
-  padding-left: calc( 									(1 - var(--check-7-sum)) * 										(var(--gap) + var(--char-width)) 								);
-}
-section.addition .result-display div.bits span.show-check.check-7 span.digit-1 {
-  padding-right: calc( 									(0 + var(--check-7-sum)) * 										(var(--gap) + var(--char-width)) 								);
+section.addition .result-display > span span.show-check.check-7 {
+  --is-one: var(--check-7-sum);
 }
 section.addition input#check-first-8:checked ~ input#check-second-8:checked ~ .result-display {
   --check-8-sum: calc(var(--check-7-carry));
@@ -477,11 +479,8 @@ section.addition input#check-second-8:checked ~ .second-labels label[for=check-s
 section.addition .result-display {
   --check-16-sum: var(--check-15-carry);
 }
-section.addition .result-display div.bits span.show-check.check-8 span.digit-0 {
-  padding-left: calc( 									(1 - var(--check-8-sum)) * 										(var(--gap) + var(--char-width)) 								);
-}
-section.addition .result-display div.bits span.show-check.check-8 span.digit-1 {
-  padding-right: calc( 									(0 + var(--check-8-sum)) * 										(var(--gap) + var(--char-width)) 								);
+section.addition .result-display > span span.show-check.check-8 {
+  --is-one: var(--check-8-sum);
 }
 section.addition input#check-first-9:checked ~ input#check-second-9:checked ~ .result-display {
   --check-9-sum: calc(var(--check-8-carry));
@@ -514,11 +513,8 @@ section.addition input#check-second-9:checked ~ .second-labels label[for=check-s
 section.addition .result-display {
   --check-16-sum: var(--check-15-carry);
 }
-section.addition .result-display div.bits span.show-check.check-9 span.digit-0 {
-  padding-left: calc( 									(1 - var(--check-9-sum)) * 										(var(--gap) + var(--char-width)) 								);
-}
-section.addition .result-display div.bits span.show-check.check-9 span.digit-1 {
-  padding-right: calc( 									(0 + var(--check-9-sum)) * 										(var(--gap) + var(--char-width)) 								);
+section.addition .result-display > span span.show-check.check-9 {
+  --is-one: var(--check-9-sum);
 }
 section.addition input#check-first-10:checked ~ input#check-second-10:checked ~ .result-display {
   --check-10-sum: calc(var(--check-9-carry));
@@ -551,11 +547,8 @@ section.addition input#check-second-10:checked ~ .second-labels label[for=check-
 section.addition .result-display {
   --check-16-sum: var(--check-15-carry);
 }
-section.addition .result-display div.bits span.show-check.check-10 span.digit-0 {
-  padding-left: calc( 									(1 - var(--check-10-sum)) * 										(var(--gap) + var(--char-width)) 								);
-}
-section.addition .result-display div.bits span.show-check.check-10 span.digit-1 {
-  padding-right: calc( 									(0 + var(--check-10-sum)) * 										(var(--gap) + var(--char-width)) 								);
+section.addition .result-display > span span.show-check.check-10 {
+  --is-one: var(--check-10-sum);
 }
 section.addition input#check-first-11:checked ~ input#check-second-11:checked ~ .result-display {
   --check-11-sum: calc(var(--check-10-carry));
@@ -588,11 +581,8 @@ section.addition input#check-second-11:checked ~ .second-labels label[for=check-
 section.addition .result-display {
   --check-16-sum: var(--check-15-carry);
 }
-section.addition .result-display div.bits span.show-check.check-11 span.digit-0 {
-  padding-left: calc( 									(1 - var(--check-11-sum)) * 										(var(--gap) + var(--char-width)) 								);
-}
-section.addition .result-display div.bits span.show-check.check-11 span.digit-1 {
-  padding-right: calc( 									(0 + var(--check-11-sum)) * 										(var(--gap) + var(--char-width)) 								);
+section.addition .result-display > span span.show-check.check-11 {
+  --is-one: var(--check-11-sum);
 }
 section.addition input#check-first-12:checked ~ input#check-second-12:checked ~ .result-display {
   --check-12-sum: calc(var(--check-11-carry));
@@ -625,11 +615,8 @@ section.addition input#check-second-12:checked ~ .second-labels label[for=check-
 section.addition .result-display {
   --check-16-sum: var(--check-15-carry);
 }
-section.addition .result-display div.bits span.show-check.check-12 span.digit-0 {
-  padding-left: calc( 									(1 - var(--check-12-sum)) * 										(var(--gap) + var(--char-width)) 								);
-}
-section.addition .result-display div.bits span.show-check.check-12 span.digit-1 {
-  padding-right: calc( 									(0 + var(--check-12-sum)) * 										(var(--gap) + var(--char-width)) 								);
+section.addition .result-display > span span.show-check.check-12 {
+  --is-one: var(--check-12-sum);
 }
 section.addition input#check-first-13:checked ~ input#check-second-13:checked ~ .result-display {
   --check-13-sum: calc(var(--check-12-carry));
@@ -662,11 +649,8 @@ section.addition input#check-second-13:checked ~ .second-labels label[for=check-
 section.addition .result-display {
   --check-16-sum: var(--check-15-carry);
 }
-section.addition .result-display div.bits span.show-check.check-13 span.digit-0 {
-  padding-left: calc( 									(1 - var(--check-13-sum)) * 										(var(--gap) + var(--char-width)) 								);
-}
-section.addition .result-display div.bits span.show-check.check-13 span.digit-1 {
-  padding-right: calc( 									(0 + var(--check-13-sum)) * 										(var(--gap) + var(--char-width)) 								);
+section.addition .result-display > span span.show-check.check-13 {
+  --is-one: var(--check-13-sum);
 }
 section.addition input#check-first-14:checked ~ input#check-second-14:checked ~ .result-display {
   --check-14-sum: calc(var(--check-13-carry));
@@ -699,11 +683,8 @@ section.addition input#check-second-14:checked ~ .second-labels label[for=check-
 section.addition .result-display {
   --check-16-sum: var(--check-15-carry);
 }
-section.addition .result-display div.bits span.show-check.check-14 span.digit-0 {
-  padding-left: calc( 									(1 - var(--check-14-sum)) * 										(var(--gap) + var(--char-width)) 								);
-}
-section.addition .result-display div.bits span.show-check.check-14 span.digit-1 {
-  padding-right: calc( 									(0 + var(--check-14-sum)) * 										(var(--gap) + var(--char-width)) 								);
+section.addition .result-display > span span.show-check.check-14 {
+  --is-one: var(--check-14-sum);
 }
 section.addition input#check-first-15:checked ~ input#check-second-15:checked ~ .result-display {
   --check-15-sum: calc(var(--check-14-carry));
@@ -736,11 +717,8 @@ section.addition input#check-second-15:checked ~ .second-labels label[for=check-
 section.addition .result-display {
   --check-16-sum: var(--check-15-carry);
 }
-section.addition .result-display div.bits span.show-check.check-15 span.digit-0 {
-  padding-left: calc( 									(1 - var(--check-15-sum)) * 										(var(--gap) + var(--char-width)) 								);
-}
-section.addition .result-display div.bits span.show-check.check-15 span.digit-1 {
-  padding-right: calc( 									(0 + var(--check-15-sum)) * 										(var(--gap) + var(--char-width)) 								);
+section.addition .result-display > span span.show-check.check-15 {
+  --is-one: var(--check-15-sum);
 }
 section.addition input#check-first-16:checked ~ input#check-second-16:checked ~ .result-display {
   --check-16-sum: calc(var(--check-15-carry));
@@ -773,11 +751,8 @@ section.addition input#check-second-16:checked ~ .second-labels label[for=check-
 section.addition .result-display {
   --check-16-sum: var(--check-15-carry);
 }
-section.addition .result-display div.bits span.show-check.check-16 span.digit-0 {
-  padding-left: calc( 									(1 - var(--check-16-sum)) * 										(var(--gap) + var(--char-width)) 								);
-}
-section.addition .result-display div.bits span.show-check.check-16 span.digit-1 {
-  padding-right: calc( 									(0 + var(--check-16-sum)) * 										(var(--gap) + var(--char-width)) 								);
+section.addition .result-display > span span.show-check.check-16 {
+  --is-one: var(--check-16-sum);
 }
 
-/*# sourceMappingURL=data:application/json;charset=utf-8,%7B%22version%22:3,%22sourceRoot%22:%22%22,%22sources%22:%5B%22style.scss%22%5D,%22names%22:%5B%5D,%22mappings%22:%22AAIA;EACC;;;AAGD;EACC;EACA;EACA;EACA;EAEA;EAGA;EACA;EACA;EACA;;AAEA;EACC;;;AAIF;EACC;EACA;;;AAGD;EACC;;;AAeD;EACC;EACA;EACA;;AAEA;EACC;EACA;;AAGD;EACC;EAEA;EACA;EAGC;;AAIF;EACC;;AAGD;EACC;;AAGD;EACC;;AAGD;EACC;EACA;EACA;;AAKD;EACC;EACA;EACA;;AAEA;EACC;EAEA,OAVW;EAWX,QAXW;;AAcZ;EACC;EACA;EACA;EAEA;EAEA;EACA;EAEA;EACA;;AAEA;AAAA;AAAA;AAAA;AAAA;AAAA;EAMC;EACA;EACA;EACA;EACA;EACA;EACA;;AACA;AAAA;AAAA;AAAA;AAAA;AAAA;EACC;EACA;EACA;EACA;EACA;EACA;;AAIF;EACC;;AACA;EACC;;AAGF;EACC;;AAED;EACC;;AAED;EACC;;AAED;EACC;;AAED;EACC;;AACA;EACC;;AAMJ;EACC;EACA;;AAEA;EACC;EACA;EACA;;AAEA;EACC;EACA;EACA;EAEA,OA3FU;EA4FV,QA5FU;EA8FV;EACA;EAEA;EAEA;EAEA;;AAGC;EAEC;;AAeE;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAsBN;EACC;;AAGC;EACC;;AALH;EACC;;AAGC;EACC;;AAMJ;EACC;;AAMI;EACC;;AADD;EACC;;AA/DA;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAsBN;EACC;;AAGC;EACC;;AALH;EACC;;AAGC;EACC;;AAMJ;EACC;;AAMI;EACC;;AADD;EACC;;AA/DA;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAsBN;EACC;;AAGC;EACC;;AALH;EACC;;AAGC;EACC;;AAMJ;EACC;;AAMI;EACC;;AADD;EACC;;AA/DA;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAsBN;EACC;;AAGC;EACC;;AA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%22,%22file%22:%22style.css%22%7D */
+/*# sourceMappingURL=data:application/json;charset=utf-8,%7B%22version%22:3,%22sourceRoot%22:%22%22,%22sources%22:%5B%22style.scss%22%5D,%22names%22:%5B%5D,%22mappings%22:%22AAIA;EACC;;;AAGD;EACC;EACA;EAEA;EACA;EAEA;EAGA;EACA;EACA;;AAGA;EACC;;;AASF;EACC;;;AAeD;EACC;EACA;EACA;;AAEA;EACC;EACA;;AAGD;EACC;EAEA;EACA;EAGC;;AAIF;EACC;;AAGD;EACC;;AAGD;EACC;;AAGD;EACC;EACA;EACA;;AAGD;EACC;EACA;EACA;;AAEA;EACC;EAEA;EACA;;AAEA;AAAA;EAEC;EACA;EACA;EACA;EAEA;EACA;EAEA;EACA;EAEA;;AAIA;EACC;;AAED;EACC;;AAIF;EACC;EACA;EACA;EACA;EACA;EACA;;AACA;EACC;EACA;EACA;EACA;EACA;EACA;;AAIF;EACC;;AAED;EACC;;AAED;EACC;;AAED;EACC;;AAED;EACC;;AAED;EACC;;AAMH;EACC;EACA;EAEA;EACA;EACA;;AAEA;EACC;EACA;EACA;;AAEA;EACC;EACA;EACA;EAEA;EACA;EACA;EACA;EAEA;EACA;EACA;;AAEA;EACC;EACA;EACA;EACA;EACA;EACA;EACA;;AACA;EACC;EACA;EACA;EACA;EACA;EACA;;AAIF;EACC;;AACA;EACC;;AAGF;EACC;;AAED;EACC;;AAED;EACC;;AAED;EACC;;AAED;EACC;;AAEA;EACC;;AAeE;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAsBN;EACC;;AAGC;EACC;;AALH;EACC;;AAGC;EACC;;AAMJ;EACC;;AAGC;EACC;;AA5DG;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAsBN;EACC;;AAGC;EACC;;AALH;EACC;;AAGC;EACC;;AAMJ;EACC;;AAGC;EACC;;AA5DG;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAsBN;EACC;;AAGC;EACC;;AALH;EACC;;AAGC;EACC;;AAMJ;EACC;;AAGC;EACC;;AA5DG;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAsBN;EACC;;AAGC;EACC;;AALH;EACC;;AAGC;EACC;;AAMJ;EACC;;AAGC;EACC;;AA5DG;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAsBN;EACC;;AAGC;EACC;;AALH;EACC;;AAGC;EACC;;AAMJ;EACC;;AAGC;EACC;;AA5DG;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAsBN;EACC;;AAGC;EACC;;AALH;EACC;;AAGC;EACC;;AAMJ;EACC;;AAGC;EACC;;AA5DG;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAsBN;EACC;;AAGC;EACC;;AALH;EACC;;AAGC;EACC;;AAMJ;EACC;;AAGC;EACC;;AA5DG;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAsBN;EACC;;AAGC;EACC;;AALH;EACC;;AAGC;EACC;;AAMJ;EACC;;AAGC;EACC;;AA5DG;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAsBN;EACC;;AAGC;EACC;;AALH;EACC;;AAGC;EACC;;AAMJ;EACC;;AAGC;EACC;;AA5DG;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAsBN;EACC;;AAGC;EACC;;AALH;EACC;;AAGC;EACC;;AAMJ;EACC;;AAGC;EACC;;AA5DG;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAsBN;EACC;;AAGC;EACC;;AALH;EACC;;AAGC;EACC;;AAMJ;EACC;;AAGC;EACC;;AA5DG;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAsBN;EACC;;AAGC;EACC;;AALH;EACC;;AAGC;EACC;;AAMJ;EACC;;AAGC;EACC;;AA5DG;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAsBN;EACC;;AAGC;EACC;;AALH;EACC;;AAGC;EACC;;AAMJ;EACC;;AAGC;EACC;;AA5DG;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAsBN;EACC;;AAGC;EACC;;AALH;EACC;;AAGC;EACC;;AAMJ;EACC;;AAGC;EACC;;AA5DG;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAsBN;EACC;;AAGC;EACC;;AALH;EACC;;AAGC;EACC;;AAMJ;EACC;;AAGC;EACC;;AA5DG;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAsBN;EACC;;AAGC;EACC;;AALH;EACC;;AAGC;EACC;;AAMJ;EACC;;AAGC;EACC;;AA5DG;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAsBN;EACC;;AAGC;EACC;;AALH;EACC;;AAGC;EACC;;AAMJ;EACC;;AAGC;EACC%22,%22file%22:%22style.css%22%7D */

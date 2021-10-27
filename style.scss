@@ -9,7 +9,8 @@ $checkboxCount: 16;
 body {
 	font-family: sans-serif;
 	background-color: black;
-	font-size: 1.5rem;
+	// font-size: 1.5rem;
+	font-size: 1.5vw;
 	perspective: 30em;
 	// perspective: 5em;
 	perspective-origin: 50% calc(50% - 2em);
@@ -18,17 +19,17 @@ body {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	overflow: hidden;
+	// overflow: hidden;
 
 	* {
 		transform-style: preserve-3d;
 	}
 }
 
-* {
-	color: white;
-	background: transparent;
-}
+// * {
+// 	color: white;
+// 	background: transparent;
+// }
 
 a {
 	color: lightSkyBlue;
@@ -82,48 +83,51 @@ section.addition {
 	input[type="checkbox"] {
 		position: absolute;
 		z-index: -1;
-		opacity: 0;
+		visibility: hidden;
 	}
-
-	$cell-width: 2em;
 
 	.labels {
 		display: inline-flex;
 		flex-wrap: wrap;
 		gap: 1em;
 
-		span {
+		& > span {
 			display: inline-block;
-
-			width: $cell-width;
-			height: $cell-width;
-		}
-
-		label[for] {
-			display: inline-flex;
-			align-items: center;
-			justify-content: center;
-
-			padding: 1em;
 
 			width: 2em;
 			height: 2em;
 
-			color: black;
-			--is-one: 0;
+			label[for],
+			.placeholder {
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				--global-transform: rotateX(calc(var(--is-one) * 90deg));
 
-			.left,
-			.right,
-			.front,
-			.back,
-			.top,
-			.bottom {
+				--is-one: 0;
+				padding: 1em;
+
+				width: 2em;
+				height: 2em;
+
+				color: black;
+			}
+
+			label[for] {
+				.front::before {
+					content: "0";
+				}
+				.bottom::before {
+					content: "1";
+				}
+			}
+
+			.side {
 				position: absolute;
 				width: 2em;
 				height: 2em;
 				background: #{rgba(lightBlue, 60%)};
 				box-shadow: 0 0 0.5em #000a inset;
-				--global-transform: rotateX(calc(var(--is-one) * 90deg));
 				transition: transform 250ms ease-in-out;
 				&::before {
 					width: 100%;
@@ -137,9 +141,6 @@ section.addition {
 
 			.front {
 				transform: var(--global-transform) translateZ(1em);
-				&::before {
-					content: "0";
-				}
 			}
 			.right {
 				transform: var(--global-transform) rotateY(90deg) translateZ(1em);
@@ -154,10 +155,8 @@ section.addition {
 				transform: var(--global-transform) translateY(-1em) rotateX(90deg);
 			}
 			.bottom {
-				transform: var(--global-transform) translateY(1em) rotateX(90deg) rotateZ(180deg) rotateY(180deg);
-				&::before {
-					content: "1";
-				}
+				transform: var(--global-transform) translateY(1em) rotateX(90deg) rotateZ(180deg)
+					rotateY(180deg);
 			}
 		}
 	}
@@ -166,32 +165,70 @@ section.addition {
 		--col-bg: white;
 		--col-fg: black;
 
-		div.bits {
-			display: inline-flex;
-			flex-wrap: wrap;
-			gap: 2px;
+		display: inline-flex;
+		flex-wrap: wrap;
+		gap: 1em;
+
+		& > span {
+			display: inline-block;
+			width: 2em;
+			height: 2em;
 
 			span.show-check {
 				display: inline-flex;
 				align-items: center;
 				justify-content: center;
 
-				width: $cell-width;
-				height: $cell-width;
+				width: 2em;
+				height: 2em;
+				color: black;
+				padding: 1em;
 
-				--gap: 10em;
-				--char-width: 0.5em;
+				--is-one: 0;
+				width: 2em;
+				height: 2em;
 
-				gap: var(--gap);
+				.side {
+					position: absolute;
+					width: 2em;
+					height: 2em;
+					background: #{rgba(lightBlue, 60%)};
+					box-shadow: 0 0 0.5em #000a inset;
+					--global-transform: rotateX(calc(var(--is-one) * 90deg));
+					transition: transform 250ms ease-in-out;
+					&::before {
+						width: 100%;
+						height: 100%;
+						color: black;
+						display: flex;
+						justify-content: center;
+						align-items: center;
+					}
+				}
 
-				clip-path: inset(0);
-
-				background-color: var(--col-bg);
-
-				span {
-					&.digit-0,
-					&.digit-1 {
-						color: var(--col-fg);
+				.front {
+					transform: var(--global-transform) translateZ(1em);
+					&::before {
+						content: "0";
+					}
+				}
+				.right {
+					transform: var(--global-transform) rotateY(90deg) translateZ(1em);
+				}
+				.back {
+					transform: var(--global-transform) rotateY(180deg) translateZ(1em);
+				}
+				.left {
+					transform: var(--global-transform) rotateY(-90deg) translateZ(1em);
+				}
+				.top {
+					transform: var(--global-transform) translateY(-1em) rotateX(90deg);
+				}
+				.bottom {
+					transform: var(--global-transform) translateY(1em) rotateX(90deg) rotateZ(180deg)
+						rotateY(180deg);
+					&::before {
+						content: "1";
 					}
 				}
 			}
@@ -264,18 +301,9 @@ section.addition {
 		.result-display {
 			--check-#{$checkboxCount}-sum: var(--check-#{$checkboxCount - 1}-carry);
 
-			div.bits {
+			& > span {
 				span.show-check.check-#{$i} {
-					span {
-						@each $digit in (0, 1) {
-							&.digit-#{$digit} {
-								padding-#{if($digit == 1, "right", "left")}: calc(
-									(#{if($digit == 0, "1 -", "0 +")} var(--check-#{$i}-sum)) *
-										(var(--gap) + var(--char-width))
-								);
-							}
-						}
-					}
+					--is-one: var(--check-#{$i}-sum);
 				}
 			}
 		}
