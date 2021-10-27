@@ -9,6 +9,20 @@ $checkboxCount: 16;
 body {
 	font-family: sans-serif;
 	background-color: black;
+	font-size: 1.5rem;
+	perspective: 30em;
+	// perspective: 5em;
+	perspective-origin: 50% calc(50% - 2em);
+	// perspective-origin: 50% 50%;
+	// transform-style: preserve-3d;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	overflow: hidden;
+
+	* {
+		transform-style: preserve-3d;
+	}
 }
 
 * {
@@ -44,6 +58,10 @@ section.addition {
 
 	.number-display {
 		font-weight: bold;
+		// transform: translateY(10em) translateZ(10em) translateX(10em);
+		position: absolute;
+		transform: translateZ(1em);
+		// transform: translate(10em, 10em, 10em);
 		padding: {
 			left: 0.4em;
 		}
@@ -72,7 +90,7 @@ section.addition {
 	.labels {
 		display: inline-flex;
 		flex-wrap: wrap;
-		gap: 2px;
+		gap: 1em;
 
 		span {
 			display: inline-block;
@@ -86,14 +104,60 @@ section.addition {
 			align-items: center;
 			justify-content: center;
 
-			width: 100%;
-			height: 100%;
+			padding: 1em;
 
-			background-color: white;
+			width: 2em;
+			height: 2em;
+
 			color: black;
+			--is-one: 0;
 
-			&::before {
-				content: "0";
+			.left,
+			.right,
+			.front,
+			.back,
+			.top,
+			.bottom {
+				position: absolute;
+				width: 2em;
+				height: 2em;
+				background: #{rgba(lightBlue, 60%)};
+				box-shadow: 0 0 0.5em #000a inset;
+				--global-transform: rotateX(calc(var(--is-one) * 90deg));
+				transition: transform 250ms ease-in-out;
+				&::before {
+					width: 100%;
+					height: 100%;
+					color: black;
+					display: flex;
+					justify-content: center;
+					align-items: center;
+				}
+			}
+
+			.front {
+				transform: var(--global-transform) translateZ(1em);
+				&::before {
+					content: "0";
+				}
+			}
+			.right {
+				transform: var(--global-transform) rotateY(90deg) translateZ(1em);
+			}
+			.back {
+				transform: var(--global-transform) rotateY(180deg) translateZ(1em);
+			}
+			.left {
+				transform: var(--global-transform) rotateY(-90deg) translateZ(1em);
+			}
+			.top {
+				transform: var(--global-transform) translateY(-1em) rotateX(90deg);
+			}
+			.bottom {
+				transform: var(--global-transform) translateY(1em) rotateX(90deg) rotateZ(180deg) rotateY(180deg);
+				&::before {
+					content: "1";
+				}
 			}
 		}
 	}
@@ -185,15 +249,13 @@ section.addition {
 			}
 		}
 
-		@each $type in ("first", "second") {
-			input#check-#{$type}-#{$i}:checked {
-				counter-increment: #{$type}-number #{pow(2, $i)} sum-number #{pow(2, $i)};
+		@each $row in ("first", "second") {
+			input#check-#{$row}-#{$i}:checked {
+				counter-increment: #{$row}-number #{pow(2, $i)} sum-number #{pow(2, $i)};
 
-				& ~ .#{$type}-labels {
-					label[for="check-#{$type}-#{$i}"] {
-						&::before {
-							content: "1";
-						}
+				& ~ .#{$row}-labels {
+					label[for="check-#{$row}-#{$i}"] {
+						--is-one: 1;
 					}
 				}
 			}
