@@ -24,30 +24,50 @@ a {
 }
 
 section.addition {
-  font-family: monospace;
   counter-reset: first-number second-number sum-number 0;
   user-select: none;
 }
-section.addition .operator {
-  font-weight: bold;
-  font-size: 2em;
+section.addition table {
+  font-size: inherit;
   color: white;
 }
+section.addition table tr td {
+  text-align: center;
+}
+section.addition .operator,
 section.addition .number-display {
   font-weight: bold;
-  position: absolute;
+  font-family: monospace;
   color: white;
-  transform: translateZ(1em);
-  padding-left: 0.4em;
 }
-section.addition .number-display.first::after {
-  content: "(" counter(first-number) ")";
+section.addition .operator.decimal::before,
+section.addition .number-display.decimal::before {
+  position: absolute;
 }
-section.addition .number-display.second::after {
-  content: "(" counter(second-number) ")";
+section.addition .operator.operator,
+section.addition .number-display.operator {
+  transform: translateY(0.5em);
+  font-size: 2em;
 }
-section.addition .number-display.sum::after {
-  content: "(" counter(sum-number) ")";
+section.addition .operator.number-display,
+section.addition .number-display.number-display {
+  width: 100%;
+  height: 100%;
+  transform: translateY(0.4em);
+  min-width: 5em;
+}
+section.addition .operator.sum,
+section.addition .number-display.sum {
+  transform: translateY(4em);
+}
+section.addition .decimal.first::before {
+  content: counter(first-number);
+}
+section.addition .decimal.second::before {
+  content: counter(second-number);
+}
+section.addition .decimal.sum::before {
+  content: counter(sum-number);
 }
 section.addition input[type=checkbox] {
   position: absolute;
@@ -120,583 +140,817 @@ section.addition :is(.result-display, .labels) .wrapper .placeholder .front::bef
 section.addition :is(.result-display, .labels) .wrapper .placeholder .bottom::before {
   content: "";
 }
-section.addition input#check-first-0:checked ~ input#check-second-0:checked ~ .result-display {
+section.addition .hexadecimal {
+  --bit-0-is-one: 0;
+  --bit-1-is-one: 0;
+  --bit-2-is-one: 0;
+  --bit-3-is-one: 0;
+  --bit-4-is-one: 0;
+  --bit-5-is-one: 0;
+  --bit-6-is-one: 0;
+  --bit-7-is-one: 0;
+  --bit-8-is-one: 0;
+  --bit-9-is-one: 0;
+  --bit-10-is-one: 0;
+  --bit-11-is-one: 0;
+  --bit-12-is-one: 0;
+  --bit-13-is-one: 0;
+  --bit-14-is-one: 0;
+  --bit-15-is-one: 0;
+}
+section.addition .hexadecimal.sum {
+  --bit-0-is-one: var(--check-0-sum);
+}
+section.addition .hexadecimal.sum {
+  --bit-1-is-one: var(--check-1-sum);
+}
+section.addition .hexadecimal.sum {
+  --bit-2-is-one: var(--check-2-sum);
+}
+section.addition .hexadecimal.sum {
+  --bit-3-is-one: var(--check-3-sum);
+}
+section.addition .hexadecimal.sum {
+  --bit-4-is-one: var(--check-4-sum);
+}
+section.addition .hexadecimal.sum {
+  --bit-5-is-one: var(--check-5-sum);
+}
+section.addition .hexadecimal.sum {
+  --bit-6-is-one: var(--check-6-sum);
+}
+section.addition .hexadecimal.sum {
+  --bit-7-is-one: var(--check-7-sum);
+}
+section.addition .hexadecimal.sum {
+  --bit-8-is-one: var(--check-8-sum);
+}
+section.addition .hexadecimal.sum {
+  --bit-9-is-one: var(--check-9-sum);
+}
+section.addition .hexadecimal.sum {
+  --bit-10-is-one: var(--check-10-sum);
+}
+section.addition .hexadecimal.sum {
+  --bit-11-is-one: var(--check-11-sum);
+}
+section.addition .hexadecimal.sum {
+  --bit-12-is-one: var(--check-12-sum);
+}
+section.addition .hexadecimal.sum {
+  --bit-13-is-one: var(--check-13-sum);
+}
+section.addition .hexadecimal.sum {
+  --bit-14-is-one: var(--check-14-sum);
+}
+section.addition .hexadecimal.sum {
+  --bit-15-is-one: var(--check-15-sum);
+}
+section.addition .hexadecimal.sum::before {
+  counter-reset: highest-sum-bit var(--check-16-sum);
+  content: counter(highest-sum-bit);
+  position: absolute;
+  transform: translateX(-1ch);
+}
+section.addition .hexadecimal .hex-digit {
+  font-family: monospace;
+  display: inline-block;
+  height: 1em;
+  width: 1ch;
+  clip-path: inset(0);
+}
+section.addition .hexadecimal .hex-digit .hex-chars {
+  position: absolute;
+  left: 0;
+  transform: translateX(calc(-1ch * var(--hex-digit)));
+}
+section.addition .hexadecimal .digit-0 {
+  --hex-digit: calc(
+  	var(--bit-0-is-one) *
+  		1 +
+  		var(--bit-1-is-one) *
+  		2 +
+  		var(--bit-2-is-one) *
+  		4 +
+  		var(--bit-3-is-one) *
+  		8
+  );
+}
+section.addition .hexadecimal .digit-1 {
+  --hex-digit: calc(
+  	var(--bit-4-is-one) *
+  		1 +
+  		var(--bit-5-is-one) *
+  		2 +
+  		var(--bit-6-is-one) *
+  		4 +
+  		var(--bit-7-is-one) *
+  		8
+  );
+}
+section.addition .hexadecimal .digit-2 {
+  --hex-digit: calc(
+  	var(--bit-8-is-one) *
+  		1 +
+  		var(--bit-9-is-one) *
+  		2 +
+  		var(--bit-10-is-one) *
+  		4 +
+  		var(--bit-11-is-one) *
+  		8
+  );
+}
+section.addition .hexadecimal .digit-3 {
+  --hex-digit: calc(
+  	var(--bit-12-is-one) *
+  		1 +
+  		var(--bit-13-is-one) *
+  		2 +
+  		var(--bit-14-is-one) *
+  		4 +
+  		var(--bit-15-is-one) *
+  		8
+  );
+}
+section.addition input#check-first-0:checked ~ input#check-second-0:checked ~ table :is(.result-display, .number-display.hexadecimal) {
   --check-0-sum: 0;
   --check-0-carry: 1;
 }
-section.addition input#check-first-0:checked ~ input#check-second-0:not(:checked) ~ .result-display {
+section.addition input#check-first-0:checked ~ input#check-second-0:not(:checked) ~ table :is(.result-display, .number-display.hexadecimal) {
   --check-0-sum: 1;
   --check-0-carry: 0;
 }
-section.addition input#check-first-0:not(:checked) ~ input#check-second-0:checked ~ .result-display {
+section.addition input#check-first-0:not(:checked) ~ input#check-second-0:checked ~ table :is(.result-display, .number-display.hexadecimal) {
   --check-0-sum: 1;
   --check-0-carry: 0;
 }
-section.addition input#check-first-0:not(:checked) ~ input#check-second-0:not(:checked) ~ .result-display {
+section.addition input#check-first-0:not(:checked) ~ input#check-second-0:not(:checked) ~ table :is(.result-display, .number-display.hexadecimal) {
   --check-0-sum: 0;
   --check-0-carry: 0;
 }
 section.addition input#check-first-0:checked {
   counter-increment: first-number 1 sum-number 1;
 }
-section.addition input#check-first-0:checked ~ .first-labels label[for=check-first-0] {
+section.addition input#check-first-0:checked ~ table .first-labels label[for=check-first-0] {
   --is-one: 1;
+}
+section.addition input#check-first-0:checked ~ table .hexadecimal.first {
+  --bit-0-is-one: 1;
 }
 section.addition input#check-second-0:checked {
   counter-increment: second-number 1 sum-number 1;
 }
-section.addition input#check-second-0:checked ~ .second-labels label[for=check-second-0] {
+section.addition input#check-second-0:checked ~ table .second-labels label[for=check-second-0] {
   --is-one: 1;
 }
-section.addition .result-display {
+section.addition input#check-second-0:checked ~ table .hexadecimal.second {
+  --bit-0-is-one: 1;
+}
+section.addition :is(.result-display, .number-display.hexadecimal) {
   --check-16-sum: var(--check-15-carry);
 }
-section.addition .result-display > span span.show-check.check-0 {
+section.addition :is(.result-display, .number-display.hexadecimal) .show-check.check-0 {
   --is-one: var(--check-0-sum);
 }
-section.addition input#check-first-1:checked ~ input#check-second-1:checked ~ .result-display {
+section.addition input#check-first-1:checked ~ input#check-second-1:checked ~ table :is(.result-display, .number-display.hexadecimal) {
   --check-1-sum: calc(var(--check-0-carry));
   --check-1-carry: 1;
 }
-section.addition input#check-first-1:checked ~ input#check-second-1:not(:checked) ~ .result-display {
+section.addition input#check-first-1:checked ~ input#check-second-1:not(:checked) ~ table :is(.result-display, .number-display.hexadecimal) {
   --check-1-sum: calc(1 - var(--check-0-carry));
   --check-1-carry: calc(var(--check-0-carry));
 }
-section.addition input#check-first-1:not(:checked) ~ input#check-second-1:checked ~ .result-display {
+section.addition input#check-first-1:not(:checked) ~ input#check-second-1:checked ~ table :is(.result-display, .number-display.hexadecimal) {
   --check-1-sum: calc(1 - var(--check-0-carry));
   --check-1-carry: calc(var(--check-0-carry));
 }
-section.addition input#check-first-1:not(:checked) ~ input#check-second-1:not(:checked) ~ .result-display {
+section.addition input#check-first-1:not(:checked) ~ input#check-second-1:not(:checked) ~ table :is(.result-display, .number-display.hexadecimal) {
   --check-1-sum: calc(var(--check-0-carry));
   --check-1-carry: 0;
 }
 section.addition input#check-first-1:checked {
   counter-increment: first-number 2 sum-number 2;
 }
-section.addition input#check-first-1:checked ~ .first-labels label[for=check-first-1] {
+section.addition input#check-first-1:checked ~ table .first-labels label[for=check-first-1] {
   --is-one: 1;
+}
+section.addition input#check-first-1:checked ~ table .hexadecimal.first {
+  --bit-1-is-one: 1;
 }
 section.addition input#check-second-1:checked {
   counter-increment: second-number 2 sum-number 2;
 }
-section.addition input#check-second-1:checked ~ .second-labels label[for=check-second-1] {
+section.addition input#check-second-1:checked ~ table .second-labels label[for=check-second-1] {
   --is-one: 1;
 }
-section.addition .result-display {
+section.addition input#check-second-1:checked ~ table .hexadecimal.second {
+  --bit-1-is-one: 1;
+}
+section.addition :is(.result-display, .number-display.hexadecimal) {
   --check-16-sum: var(--check-15-carry);
 }
-section.addition .result-display > span span.show-check.check-1 {
+section.addition :is(.result-display, .number-display.hexadecimal) .show-check.check-1 {
   --is-one: var(--check-1-sum);
 }
-section.addition input#check-first-2:checked ~ input#check-second-2:checked ~ .result-display {
+section.addition input#check-first-2:checked ~ input#check-second-2:checked ~ table :is(.result-display, .number-display.hexadecimal) {
   --check-2-sum: calc(var(--check-1-carry));
   --check-2-carry: 1;
 }
-section.addition input#check-first-2:checked ~ input#check-second-2:not(:checked) ~ .result-display {
+section.addition input#check-first-2:checked ~ input#check-second-2:not(:checked) ~ table :is(.result-display, .number-display.hexadecimal) {
   --check-2-sum: calc(1 - var(--check-1-carry));
   --check-2-carry: calc(var(--check-1-carry));
 }
-section.addition input#check-first-2:not(:checked) ~ input#check-second-2:checked ~ .result-display {
+section.addition input#check-first-2:not(:checked) ~ input#check-second-2:checked ~ table :is(.result-display, .number-display.hexadecimal) {
   --check-2-sum: calc(1 - var(--check-1-carry));
   --check-2-carry: calc(var(--check-1-carry));
 }
-section.addition input#check-first-2:not(:checked) ~ input#check-second-2:not(:checked) ~ .result-display {
+section.addition input#check-first-2:not(:checked) ~ input#check-second-2:not(:checked) ~ table :is(.result-display, .number-display.hexadecimal) {
   --check-2-sum: calc(var(--check-1-carry));
   --check-2-carry: 0;
 }
 section.addition input#check-first-2:checked {
   counter-increment: first-number 4 sum-number 4;
 }
-section.addition input#check-first-2:checked ~ .first-labels label[for=check-first-2] {
+section.addition input#check-first-2:checked ~ table .first-labels label[for=check-first-2] {
   --is-one: 1;
+}
+section.addition input#check-first-2:checked ~ table .hexadecimal.first {
+  --bit-2-is-one: 1;
 }
 section.addition input#check-second-2:checked {
   counter-increment: second-number 4 sum-number 4;
 }
-section.addition input#check-second-2:checked ~ .second-labels label[for=check-second-2] {
+section.addition input#check-second-2:checked ~ table .second-labels label[for=check-second-2] {
   --is-one: 1;
 }
-section.addition .result-display {
+section.addition input#check-second-2:checked ~ table .hexadecimal.second {
+  --bit-2-is-one: 1;
+}
+section.addition :is(.result-display, .number-display.hexadecimal) {
   --check-16-sum: var(--check-15-carry);
 }
-section.addition .result-display > span span.show-check.check-2 {
+section.addition :is(.result-display, .number-display.hexadecimal) .show-check.check-2 {
   --is-one: var(--check-2-sum);
 }
-section.addition input#check-first-3:checked ~ input#check-second-3:checked ~ .result-display {
+section.addition input#check-first-3:checked ~ input#check-second-3:checked ~ table :is(.result-display, .number-display.hexadecimal) {
   --check-3-sum: calc(var(--check-2-carry));
   --check-3-carry: 1;
 }
-section.addition input#check-first-3:checked ~ input#check-second-3:not(:checked) ~ .result-display {
+section.addition input#check-first-3:checked ~ input#check-second-3:not(:checked) ~ table :is(.result-display, .number-display.hexadecimal) {
   --check-3-sum: calc(1 - var(--check-2-carry));
   --check-3-carry: calc(var(--check-2-carry));
 }
-section.addition input#check-first-3:not(:checked) ~ input#check-second-3:checked ~ .result-display {
+section.addition input#check-first-3:not(:checked) ~ input#check-second-3:checked ~ table :is(.result-display, .number-display.hexadecimal) {
   --check-3-sum: calc(1 - var(--check-2-carry));
   --check-3-carry: calc(var(--check-2-carry));
 }
-section.addition input#check-first-3:not(:checked) ~ input#check-second-3:not(:checked) ~ .result-display {
+section.addition input#check-first-3:not(:checked) ~ input#check-second-3:not(:checked) ~ table :is(.result-display, .number-display.hexadecimal) {
   --check-3-sum: calc(var(--check-2-carry));
   --check-3-carry: 0;
 }
 section.addition input#check-first-3:checked {
   counter-increment: first-number 8 sum-number 8;
 }
-section.addition input#check-first-3:checked ~ .first-labels label[for=check-first-3] {
+section.addition input#check-first-3:checked ~ table .first-labels label[for=check-first-3] {
   --is-one: 1;
+}
+section.addition input#check-first-3:checked ~ table .hexadecimal.first {
+  --bit-3-is-one: 1;
 }
 section.addition input#check-second-3:checked {
   counter-increment: second-number 8 sum-number 8;
 }
-section.addition input#check-second-3:checked ~ .second-labels label[for=check-second-3] {
+section.addition input#check-second-3:checked ~ table .second-labels label[for=check-second-3] {
   --is-one: 1;
 }
-section.addition .result-display {
+section.addition input#check-second-3:checked ~ table .hexadecimal.second {
+  --bit-3-is-one: 1;
+}
+section.addition :is(.result-display, .number-display.hexadecimal) {
   --check-16-sum: var(--check-15-carry);
 }
-section.addition .result-display > span span.show-check.check-3 {
+section.addition :is(.result-display, .number-display.hexadecimal) .show-check.check-3 {
   --is-one: var(--check-3-sum);
 }
-section.addition input#check-first-4:checked ~ input#check-second-4:checked ~ .result-display {
+section.addition input#check-first-4:checked ~ input#check-second-4:checked ~ table :is(.result-display, .number-display.hexadecimal) {
   --check-4-sum: calc(var(--check-3-carry));
   --check-4-carry: 1;
 }
-section.addition input#check-first-4:checked ~ input#check-second-4:not(:checked) ~ .result-display {
+section.addition input#check-first-4:checked ~ input#check-second-4:not(:checked) ~ table :is(.result-display, .number-display.hexadecimal) {
   --check-4-sum: calc(1 - var(--check-3-carry));
   --check-4-carry: calc(var(--check-3-carry));
 }
-section.addition input#check-first-4:not(:checked) ~ input#check-second-4:checked ~ .result-display {
+section.addition input#check-first-4:not(:checked) ~ input#check-second-4:checked ~ table :is(.result-display, .number-display.hexadecimal) {
   --check-4-sum: calc(1 - var(--check-3-carry));
   --check-4-carry: calc(var(--check-3-carry));
 }
-section.addition input#check-first-4:not(:checked) ~ input#check-second-4:not(:checked) ~ .result-display {
+section.addition input#check-first-4:not(:checked) ~ input#check-second-4:not(:checked) ~ table :is(.result-display, .number-display.hexadecimal) {
   --check-4-sum: calc(var(--check-3-carry));
   --check-4-carry: 0;
 }
 section.addition input#check-first-4:checked {
   counter-increment: first-number 16 sum-number 16;
 }
-section.addition input#check-first-4:checked ~ .first-labels label[for=check-first-4] {
+section.addition input#check-first-4:checked ~ table .first-labels label[for=check-first-4] {
   --is-one: 1;
+}
+section.addition input#check-first-4:checked ~ table .hexadecimal.first {
+  --bit-4-is-one: 1;
 }
 section.addition input#check-second-4:checked {
   counter-increment: second-number 16 sum-number 16;
 }
-section.addition input#check-second-4:checked ~ .second-labels label[for=check-second-4] {
+section.addition input#check-second-4:checked ~ table .second-labels label[for=check-second-4] {
   --is-one: 1;
 }
-section.addition .result-display {
+section.addition input#check-second-4:checked ~ table .hexadecimal.second {
+  --bit-4-is-one: 1;
+}
+section.addition :is(.result-display, .number-display.hexadecimal) {
   --check-16-sum: var(--check-15-carry);
 }
-section.addition .result-display > span span.show-check.check-4 {
+section.addition :is(.result-display, .number-display.hexadecimal) .show-check.check-4 {
   --is-one: var(--check-4-sum);
 }
-section.addition input#check-first-5:checked ~ input#check-second-5:checked ~ .result-display {
+section.addition input#check-first-5:checked ~ input#check-second-5:checked ~ table :is(.result-display, .number-display.hexadecimal) {
   --check-5-sum: calc(var(--check-4-carry));
   --check-5-carry: 1;
 }
-section.addition input#check-first-5:checked ~ input#check-second-5:not(:checked) ~ .result-display {
+section.addition input#check-first-5:checked ~ input#check-second-5:not(:checked) ~ table :is(.result-display, .number-display.hexadecimal) {
   --check-5-sum: calc(1 - var(--check-4-carry));
   --check-5-carry: calc(var(--check-4-carry));
 }
-section.addition input#check-first-5:not(:checked) ~ input#check-second-5:checked ~ .result-display {
+section.addition input#check-first-5:not(:checked) ~ input#check-second-5:checked ~ table :is(.result-display, .number-display.hexadecimal) {
   --check-5-sum: calc(1 - var(--check-4-carry));
   --check-5-carry: calc(var(--check-4-carry));
 }
-section.addition input#check-first-5:not(:checked) ~ input#check-second-5:not(:checked) ~ .result-display {
+section.addition input#check-first-5:not(:checked) ~ input#check-second-5:not(:checked) ~ table :is(.result-display, .number-display.hexadecimal) {
   --check-5-sum: calc(var(--check-4-carry));
   --check-5-carry: 0;
 }
 section.addition input#check-first-5:checked {
   counter-increment: first-number 32 sum-number 32;
 }
-section.addition input#check-first-5:checked ~ .first-labels label[for=check-first-5] {
+section.addition input#check-first-5:checked ~ table .first-labels label[for=check-first-5] {
   --is-one: 1;
+}
+section.addition input#check-first-5:checked ~ table .hexadecimal.first {
+  --bit-5-is-one: 1;
 }
 section.addition input#check-second-5:checked {
   counter-increment: second-number 32 sum-number 32;
 }
-section.addition input#check-second-5:checked ~ .second-labels label[for=check-second-5] {
+section.addition input#check-second-5:checked ~ table .second-labels label[for=check-second-5] {
   --is-one: 1;
 }
-section.addition .result-display {
+section.addition input#check-second-5:checked ~ table .hexadecimal.second {
+  --bit-5-is-one: 1;
+}
+section.addition :is(.result-display, .number-display.hexadecimal) {
   --check-16-sum: var(--check-15-carry);
 }
-section.addition .result-display > span span.show-check.check-5 {
+section.addition :is(.result-display, .number-display.hexadecimal) .show-check.check-5 {
   --is-one: var(--check-5-sum);
 }
-section.addition input#check-first-6:checked ~ input#check-second-6:checked ~ .result-display {
+section.addition input#check-first-6:checked ~ input#check-second-6:checked ~ table :is(.result-display, .number-display.hexadecimal) {
   --check-6-sum: calc(var(--check-5-carry));
   --check-6-carry: 1;
 }
-section.addition input#check-first-6:checked ~ input#check-second-6:not(:checked) ~ .result-display {
+section.addition input#check-first-6:checked ~ input#check-second-6:not(:checked) ~ table :is(.result-display, .number-display.hexadecimal) {
   --check-6-sum: calc(1 - var(--check-5-carry));
   --check-6-carry: calc(var(--check-5-carry));
 }
-section.addition input#check-first-6:not(:checked) ~ input#check-second-6:checked ~ .result-display {
+section.addition input#check-first-6:not(:checked) ~ input#check-second-6:checked ~ table :is(.result-display, .number-display.hexadecimal) {
   --check-6-sum: calc(1 - var(--check-5-carry));
   --check-6-carry: calc(var(--check-5-carry));
 }
-section.addition input#check-first-6:not(:checked) ~ input#check-second-6:not(:checked) ~ .result-display {
+section.addition input#check-first-6:not(:checked) ~ input#check-second-6:not(:checked) ~ table :is(.result-display, .number-display.hexadecimal) {
   --check-6-sum: calc(var(--check-5-carry));
   --check-6-carry: 0;
 }
 section.addition input#check-first-6:checked {
   counter-increment: first-number 64 sum-number 64;
 }
-section.addition input#check-first-6:checked ~ .first-labels label[for=check-first-6] {
+section.addition input#check-first-6:checked ~ table .first-labels label[for=check-first-6] {
   --is-one: 1;
+}
+section.addition input#check-first-6:checked ~ table .hexadecimal.first {
+  --bit-6-is-one: 1;
 }
 section.addition input#check-second-6:checked {
   counter-increment: second-number 64 sum-number 64;
 }
-section.addition input#check-second-6:checked ~ .second-labels label[for=check-second-6] {
+section.addition input#check-second-6:checked ~ table .second-labels label[for=check-second-6] {
   --is-one: 1;
 }
-section.addition .result-display {
+section.addition input#check-second-6:checked ~ table .hexadecimal.second {
+  --bit-6-is-one: 1;
+}
+section.addition :is(.result-display, .number-display.hexadecimal) {
   --check-16-sum: var(--check-15-carry);
 }
-section.addition .result-display > span span.show-check.check-6 {
+section.addition :is(.result-display, .number-display.hexadecimal) .show-check.check-6 {
   --is-one: var(--check-6-sum);
 }
-section.addition input#check-first-7:checked ~ input#check-second-7:checked ~ .result-display {
+section.addition input#check-first-7:checked ~ input#check-second-7:checked ~ table :is(.result-display, .number-display.hexadecimal) {
   --check-7-sum: calc(var(--check-6-carry));
   --check-7-carry: 1;
 }
-section.addition input#check-first-7:checked ~ input#check-second-7:not(:checked) ~ .result-display {
+section.addition input#check-first-7:checked ~ input#check-second-7:not(:checked) ~ table :is(.result-display, .number-display.hexadecimal) {
   --check-7-sum: calc(1 - var(--check-6-carry));
   --check-7-carry: calc(var(--check-6-carry));
 }
-section.addition input#check-first-7:not(:checked) ~ input#check-second-7:checked ~ .result-display {
+section.addition input#check-first-7:not(:checked) ~ input#check-second-7:checked ~ table :is(.result-display, .number-display.hexadecimal) {
   --check-7-sum: calc(1 - var(--check-6-carry));
   --check-7-carry: calc(var(--check-6-carry));
 }
-section.addition input#check-first-7:not(:checked) ~ input#check-second-7:not(:checked) ~ .result-display {
+section.addition input#check-first-7:not(:checked) ~ input#check-second-7:not(:checked) ~ table :is(.result-display, .number-display.hexadecimal) {
   --check-7-sum: calc(var(--check-6-carry));
   --check-7-carry: 0;
 }
 section.addition input#check-first-7:checked {
   counter-increment: first-number 128 sum-number 128;
 }
-section.addition input#check-first-7:checked ~ .first-labels label[for=check-first-7] {
+section.addition input#check-first-7:checked ~ table .first-labels label[for=check-first-7] {
   --is-one: 1;
+}
+section.addition input#check-first-7:checked ~ table .hexadecimal.first {
+  --bit-7-is-one: 1;
 }
 section.addition input#check-second-7:checked {
   counter-increment: second-number 128 sum-number 128;
 }
-section.addition input#check-second-7:checked ~ .second-labels label[for=check-second-7] {
+section.addition input#check-second-7:checked ~ table .second-labels label[for=check-second-7] {
   --is-one: 1;
 }
-section.addition .result-display {
+section.addition input#check-second-7:checked ~ table .hexadecimal.second {
+  --bit-7-is-one: 1;
+}
+section.addition :is(.result-display, .number-display.hexadecimal) {
   --check-16-sum: var(--check-15-carry);
 }
-section.addition .result-display > span span.show-check.check-7 {
+section.addition :is(.result-display, .number-display.hexadecimal) .show-check.check-7 {
   --is-one: var(--check-7-sum);
 }
-section.addition input#check-first-8:checked ~ input#check-second-8:checked ~ .result-display {
+section.addition input#check-first-8:checked ~ input#check-second-8:checked ~ table :is(.result-display, .number-display.hexadecimal) {
   --check-8-sum: calc(var(--check-7-carry));
   --check-8-carry: 1;
 }
-section.addition input#check-first-8:checked ~ input#check-second-8:not(:checked) ~ .result-display {
+section.addition input#check-first-8:checked ~ input#check-second-8:not(:checked) ~ table :is(.result-display, .number-display.hexadecimal) {
   --check-8-sum: calc(1 - var(--check-7-carry));
   --check-8-carry: calc(var(--check-7-carry));
 }
-section.addition input#check-first-8:not(:checked) ~ input#check-second-8:checked ~ .result-display {
+section.addition input#check-first-8:not(:checked) ~ input#check-second-8:checked ~ table :is(.result-display, .number-display.hexadecimal) {
   --check-8-sum: calc(1 - var(--check-7-carry));
   --check-8-carry: calc(var(--check-7-carry));
 }
-section.addition input#check-first-8:not(:checked) ~ input#check-second-8:not(:checked) ~ .result-display {
+section.addition input#check-first-8:not(:checked) ~ input#check-second-8:not(:checked) ~ table :is(.result-display, .number-display.hexadecimal) {
   --check-8-sum: calc(var(--check-7-carry));
   --check-8-carry: 0;
 }
 section.addition input#check-first-8:checked {
   counter-increment: first-number 256 sum-number 256;
 }
-section.addition input#check-first-8:checked ~ .first-labels label[for=check-first-8] {
+section.addition input#check-first-8:checked ~ table .first-labels label[for=check-first-8] {
   --is-one: 1;
+}
+section.addition input#check-first-8:checked ~ table .hexadecimal.first {
+  --bit-8-is-one: 1;
 }
 section.addition input#check-second-8:checked {
   counter-increment: second-number 256 sum-number 256;
 }
-section.addition input#check-second-8:checked ~ .second-labels label[for=check-second-8] {
+section.addition input#check-second-8:checked ~ table .second-labels label[for=check-second-8] {
   --is-one: 1;
 }
-section.addition .result-display {
+section.addition input#check-second-8:checked ~ table .hexadecimal.second {
+  --bit-8-is-one: 1;
+}
+section.addition :is(.result-display, .number-display.hexadecimal) {
   --check-16-sum: var(--check-15-carry);
 }
-section.addition .result-display > span span.show-check.check-8 {
+section.addition :is(.result-display, .number-display.hexadecimal) .show-check.check-8 {
   --is-one: var(--check-8-sum);
 }
-section.addition input#check-first-9:checked ~ input#check-second-9:checked ~ .result-display {
+section.addition input#check-first-9:checked ~ input#check-second-9:checked ~ table :is(.result-display, .number-display.hexadecimal) {
   --check-9-sum: calc(var(--check-8-carry));
   --check-9-carry: 1;
 }
-section.addition input#check-first-9:checked ~ input#check-second-9:not(:checked) ~ .result-display {
+section.addition input#check-first-9:checked ~ input#check-second-9:not(:checked) ~ table :is(.result-display, .number-display.hexadecimal) {
   --check-9-sum: calc(1 - var(--check-8-carry));
   --check-9-carry: calc(var(--check-8-carry));
 }
-section.addition input#check-first-9:not(:checked) ~ input#check-second-9:checked ~ .result-display {
+section.addition input#check-first-9:not(:checked) ~ input#check-second-9:checked ~ table :is(.result-display, .number-display.hexadecimal) {
   --check-9-sum: calc(1 - var(--check-8-carry));
   --check-9-carry: calc(var(--check-8-carry));
 }
-section.addition input#check-first-9:not(:checked) ~ input#check-second-9:not(:checked) ~ .result-display {
+section.addition input#check-first-9:not(:checked) ~ input#check-second-9:not(:checked) ~ table :is(.result-display, .number-display.hexadecimal) {
   --check-9-sum: calc(var(--check-8-carry));
   --check-9-carry: 0;
 }
 section.addition input#check-first-9:checked {
   counter-increment: first-number 512 sum-number 512;
 }
-section.addition input#check-first-9:checked ~ .first-labels label[for=check-first-9] {
+section.addition input#check-first-9:checked ~ table .first-labels label[for=check-first-9] {
   --is-one: 1;
+}
+section.addition input#check-first-9:checked ~ table .hexadecimal.first {
+  --bit-9-is-one: 1;
 }
 section.addition input#check-second-9:checked {
   counter-increment: second-number 512 sum-number 512;
 }
-section.addition input#check-second-9:checked ~ .second-labels label[for=check-second-9] {
+section.addition input#check-second-9:checked ~ table .second-labels label[for=check-second-9] {
   --is-one: 1;
 }
-section.addition .result-display {
+section.addition input#check-second-9:checked ~ table .hexadecimal.second {
+  --bit-9-is-one: 1;
+}
+section.addition :is(.result-display, .number-display.hexadecimal) {
   --check-16-sum: var(--check-15-carry);
 }
-section.addition .result-display > span span.show-check.check-9 {
+section.addition :is(.result-display, .number-display.hexadecimal) .show-check.check-9 {
   --is-one: var(--check-9-sum);
 }
-section.addition input#check-first-10:checked ~ input#check-second-10:checked ~ .result-display {
+section.addition input#check-first-10:checked ~ input#check-second-10:checked ~ table :is(.result-display, .number-display.hexadecimal) {
   --check-10-sum: calc(var(--check-9-carry));
   --check-10-carry: 1;
 }
-section.addition input#check-first-10:checked ~ input#check-second-10:not(:checked) ~ .result-display {
+section.addition input#check-first-10:checked ~ input#check-second-10:not(:checked) ~ table :is(.result-display, .number-display.hexadecimal) {
   --check-10-sum: calc(1 - var(--check-9-carry));
   --check-10-carry: calc(var(--check-9-carry));
 }
-section.addition input#check-first-10:not(:checked) ~ input#check-second-10:checked ~ .result-display {
+section.addition input#check-first-10:not(:checked) ~ input#check-second-10:checked ~ table :is(.result-display, .number-display.hexadecimal) {
   --check-10-sum: calc(1 - var(--check-9-carry));
   --check-10-carry: calc(var(--check-9-carry));
 }
-section.addition input#check-first-10:not(:checked) ~ input#check-second-10:not(:checked) ~ .result-display {
+section.addition input#check-first-10:not(:checked) ~ input#check-second-10:not(:checked) ~ table :is(.result-display, .number-display.hexadecimal) {
   --check-10-sum: calc(var(--check-9-carry));
   --check-10-carry: 0;
 }
 section.addition input#check-first-10:checked {
   counter-increment: first-number 1024 sum-number 1024;
 }
-section.addition input#check-first-10:checked ~ .first-labels label[for=check-first-10] {
+section.addition input#check-first-10:checked ~ table .first-labels label[for=check-first-10] {
   --is-one: 1;
+}
+section.addition input#check-first-10:checked ~ table .hexadecimal.first {
+  --bit-10-is-one: 1;
 }
 section.addition input#check-second-10:checked {
   counter-increment: second-number 1024 sum-number 1024;
 }
-section.addition input#check-second-10:checked ~ .second-labels label[for=check-second-10] {
+section.addition input#check-second-10:checked ~ table .second-labels label[for=check-second-10] {
   --is-one: 1;
 }
-section.addition .result-display {
+section.addition input#check-second-10:checked ~ table .hexadecimal.second {
+  --bit-10-is-one: 1;
+}
+section.addition :is(.result-display, .number-display.hexadecimal) {
   --check-16-sum: var(--check-15-carry);
 }
-section.addition .result-display > span span.show-check.check-10 {
+section.addition :is(.result-display, .number-display.hexadecimal) .show-check.check-10 {
   --is-one: var(--check-10-sum);
 }
-section.addition input#check-first-11:checked ~ input#check-second-11:checked ~ .result-display {
+section.addition input#check-first-11:checked ~ input#check-second-11:checked ~ table :is(.result-display, .number-display.hexadecimal) {
   --check-11-sum: calc(var(--check-10-carry));
   --check-11-carry: 1;
 }
-section.addition input#check-first-11:checked ~ input#check-second-11:not(:checked) ~ .result-display {
+section.addition input#check-first-11:checked ~ input#check-second-11:not(:checked) ~ table :is(.result-display, .number-display.hexadecimal) {
   --check-11-sum: calc(1 - var(--check-10-carry));
   --check-11-carry: calc(var(--check-10-carry));
 }
-section.addition input#check-first-11:not(:checked) ~ input#check-second-11:checked ~ .result-display {
+section.addition input#check-first-11:not(:checked) ~ input#check-second-11:checked ~ table :is(.result-display, .number-display.hexadecimal) {
   --check-11-sum: calc(1 - var(--check-10-carry));
   --check-11-carry: calc(var(--check-10-carry));
 }
-section.addition input#check-first-11:not(:checked) ~ input#check-second-11:not(:checked) ~ .result-display {
+section.addition input#check-first-11:not(:checked) ~ input#check-second-11:not(:checked) ~ table :is(.result-display, .number-display.hexadecimal) {
   --check-11-sum: calc(var(--check-10-carry));
   --check-11-carry: 0;
 }
 section.addition input#check-first-11:checked {
   counter-increment: first-number 2048 sum-number 2048;
 }
-section.addition input#check-first-11:checked ~ .first-labels label[for=check-first-11] {
+section.addition input#check-first-11:checked ~ table .first-labels label[for=check-first-11] {
   --is-one: 1;
+}
+section.addition input#check-first-11:checked ~ table .hexadecimal.first {
+  --bit-11-is-one: 1;
 }
 section.addition input#check-second-11:checked {
   counter-increment: second-number 2048 sum-number 2048;
 }
-section.addition input#check-second-11:checked ~ .second-labels label[for=check-second-11] {
+section.addition input#check-second-11:checked ~ table .second-labels label[for=check-second-11] {
   --is-one: 1;
 }
-section.addition .result-display {
+section.addition input#check-second-11:checked ~ table .hexadecimal.second {
+  --bit-11-is-one: 1;
+}
+section.addition :is(.result-display, .number-display.hexadecimal) {
   --check-16-sum: var(--check-15-carry);
 }
-section.addition .result-display > span span.show-check.check-11 {
+section.addition :is(.result-display, .number-display.hexadecimal) .show-check.check-11 {
   --is-one: var(--check-11-sum);
 }
-section.addition input#check-first-12:checked ~ input#check-second-12:checked ~ .result-display {
+section.addition input#check-first-12:checked ~ input#check-second-12:checked ~ table :is(.result-display, .number-display.hexadecimal) {
   --check-12-sum: calc(var(--check-11-carry));
   --check-12-carry: 1;
 }
-section.addition input#check-first-12:checked ~ input#check-second-12:not(:checked) ~ .result-display {
+section.addition input#check-first-12:checked ~ input#check-second-12:not(:checked) ~ table :is(.result-display, .number-display.hexadecimal) {
   --check-12-sum: calc(1 - var(--check-11-carry));
   --check-12-carry: calc(var(--check-11-carry));
 }
-section.addition input#check-first-12:not(:checked) ~ input#check-second-12:checked ~ .result-display {
+section.addition input#check-first-12:not(:checked) ~ input#check-second-12:checked ~ table :is(.result-display, .number-display.hexadecimal) {
   --check-12-sum: calc(1 - var(--check-11-carry));
   --check-12-carry: calc(var(--check-11-carry));
 }
-section.addition input#check-first-12:not(:checked) ~ input#check-second-12:not(:checked) ~ .result-display {
+section.addition input#check-first-12:not(:checked) ~ input#check-second-12:not(:checked) ~ table :is(.result-display, .number-display.hexadecimal) {
   --check-12-sum: calc(var(--check-11-carry));
   --check-12-carry: 0;
 }
 section.addition input#check-first-12:checked {
   counter-increment: first-number 4096 sum-number 4096;
 }
-section.addition input#check-first-12:checked ~ .first-labels label[for=check-first-12] {
+section.addition input#check-first-12:checked ~ table .first-labels label[for=check-first-12] {
   --is-one: 1;
+}
+section.addition input#check-first-12:checked ~ table .hexadecimal.first {
+  --bit-12-is-one: 1;
 }
 section.addition input#check-second-12:checked {
   counter-increment: second-number 4096 sum-number 4096;
 }
-section.addition input#check-second-12:checked ~ .second-labels label[for=check-second-12] {
+section.addition input#check-second-12:checked ~ table .second-labels label[for=check-second-12] {
   --is-one: 1;
 }
-section.addition .result-display {
+section.addition input#check-second-12:checked ~ table .hexadecimal.second {
+  --bit-12-is-one: 1;
+}
+section.addition :is(.result-display, .number-display.hexadecimal) {
   --check-16-sum: var(--check-15-carry);
 }
-section.addition .result-display > span span.show-check.check-12 {
+section.addition :is(.result-display, .number-display.hexadecimal) .show-check.check-12 {
   --is-one: var(--check-12-sum);
 }
-section.addition input#check-first-13:checked ~ input#check-second-13:checked ~ .result-display {
+section.addition input#check-first-13:checked ~ input#check-second-13:checked ~ table :is(.result-display, .number-display.hexadecimal) {
   --check-13-sum: calc(var(--check-12-carry));
   --check-13-carry: 1;
 }
-section.addition input#check-first-13:checked ~ input#check-second-13:not(:checked) ~ .result-display {
+section.addition input#check-first-13:checked ~ input#check-second-13:not(:checked) ~ table :is(.result-display, .number-display.hexadecimal) {
   --check-13-sum: calc(1 - var(--check-12-carry));
   --check-13-carry: calc(var(--check-12-carry));
 }
-section.addition input#check-first-13:not(:checked) ~ input#check-second-13:checked ~ .result-display {
+section.addition input#check-first-13:not(:checked) ~ input#check-second-13:checked ~ table :is(.result-display, .number-display.hexadecimal) {
   --check-13-sum: calc(1 - var(--check-12-carry));
   --check-13-carry: calc(var(--check-12-carry));
 }
-section.addition input#check-first-13:not(:checked) ~ input#check-second-13:not(:checked) ~ .result-display {
+section.addition input#check-first-13:not(:checked) ~ input#check-second-13:not(:checked) ~ table :is(.result-display, .number-display.hexadecimal) {
   --check-13-sum: calc(var(--check-12-carry));
   --check-13-carry: 0;
 }
 section.addition input#check-first-13:checked {
   counter-increment: first-number 8192 sum-number 8192;
 }
-section.addition input#check-first-13:checked ~ .first-labels label[for=check-first-13] {
+section.addition input#check-first-13:checked ~ table .first-labels label[for=check-first-13] {
   --is-one: 1;
+}
+section.addition input#check-first-13:checked ~ table .hexadecimal.first {
+  --bit-13-is-one: 1;
 }
 section.addition input#check-second-13:checked {
   counter-increment: second-number 8192 sum-number 8192;
 }
-section.addition input#check-second-13:checked ~ .second-labels label[for=check-second-13] {
+section.addition input#check-second-13:checked ~ table .second-labels label[for=check-second-13] {
   --is-one: 1;
 }
-section.addition .result-display {
+section.addition input#check-second-13:checked ~ table .hexadecimal.second {
+  --bit-13-is-one: 1;
+}
+section.addition :is(.result-display, .number-display.hexadecimal) {
   --check-16-sum: var(--check-15-carry);
 }
-section.addition .result-display > span span.show-check.check-13 {
+section.addition :is(.result-display, .number-display.hexadecimal) .show-check.check-13 {
   --is-one: var(--check-13-sum);
 }
-section.addition input#check-first-14:checked ~ input#check-second-14:checked ~ .result-display {
+section.addition input#check-first-14:checked ~ input#check-second-14:checked ~ table :is(.result-display, .number-display.hexadecimal) {
   --check-14-sum: calc(var(--check-13-carry));
   --check-14-carry: 1;
 }
-section.addition input#check-first-14:checked ~ input#check-second-14:not(:checked) ~ .result-display {
+section.addition input#check-first-14:checked ~ input#check-second-14:not(:checked) ~ table :is(.result-display, .number-display.hexadecimal) {
   --check-14-sum: calc(1 - var(--check-13-carry));
   --check-14-carry: calc(var(--check-13-carry));
 }
-section.addition input#check-first-14:not(:checked) ~ input#check-second-14:checked ~ .result-display {
+section.addition input#check-first-14:not(:checked) ~ input#check-second-14:checked ~ table :is(.result-display, .number-display.hexadecimal) {
   --check-14-sum: calc(1 - var(--check-13-carry));
   --check-14-carry: calc(var(--check-13-carry));
 }
-section.addition input#check-first-14:not(:checked) ~ input#check-second-14:not(:checked) ~ .result-display {
+section.addition input#check-first-14:not(:checked) ~ input#check-second-14:not(:checked) ~ table :is(.result-display, .number-display.hexadecimal) {
   --check-14-sum: calc(var(--check-13-carry));
   --check-14-carry: 0;
 }
 section.addition input#check-first-14:checked {
   counter-increment: first-number 16384 sum-number 16384;
 }
-section.addition input#check-first-14:checked ~ .first-labels label[for=check-first-14] {
+section.addition input#check-first-14:checked ~ table .first-labels label[for=check-first-14] {
   --is-one: 1;
+}
+section.addition input#check-first-14:checked ~ table .hexadecimal.first {
+  --bit-14-is-one: 1;
 }
 section.addition input#check-second-14:checked {
   counter-increment: second-number 16384 sum-number 16384;
 }
-section.addition input#check-second-14:checked ~ .second-labels label[for=check-second-14] {
+section.addition input#check-second-14:checked ~ table .second-labels label[for=check-second-14] {
   --is-one: 1;
 }
-section.addition .result-display {
+section.addition input#check-second-14:checked ~ table .hexadecimal.second {
+  --bit-14-is-one: 1;
+}
+section.addition :is(.result-display, .number-display.hexadecimal) {
   --check-16-sum: var(--check-15-carry);
 }
-section.addition .result-display > span span.show-check.check-14 {
+section.addition :is(.result-display, .number-display.hexadecimal) .show-check.check-14 {
   --is-one: var(--check-14-sum);
 }
-section.addition input#check-first-15:checked ~ input#check-second-15:checked ~ .result-display {
+section.addition input#check-first-15:checked ~ input#check-second-15:checked ~ table :is(.result-display, .number-display.hexadecimal) {
   --check-15-sum: calc(var(--check-14-carry));
   --check-15-carry: 1;
 }
-section.addition input#check-first-15:checked ~ input#check-second-15:not(:checked) ~ .result-display {
+section.addition input#check-first-15:checked ~ input#check-second-15:not(:checked) ~ table :is(.result-display, .number-display.hexadecimal) {
   --check-15-sum: calc(1 - var(--check-14-carry));
   --check-15-carry: calc(var(--check-14-carry));
 }
-section.addition input#check-first-15:not(:checked) ~ input#check-second-15:checked ~ .result-display {
+section.addition input#check-first-15:not(:checked) ~ input#check-second-15:checked ~ table :is(.result-display, .number-display.hexadecimal) {
   --check-15-sum: calc(1 - var(--check-14-carry));
   --check-15-carry: calc(var(--check-14-carry));
 }
-section.addition input#check-first-15:not(:checked) ~ input#check-second-15:not(:checked) ~ .result-display {
+section.addition input#check-first-15:not(:checked) ~ input#check-second-15:not(:checked) ~ table :is(.result-display, .number-display.hexadecimal) {
   --check-15-sum: calc(var(--check-14-carry));
   --check-15-carry: 0;
 }
 section.addition input#check-first-15:checked {
   counter-increment: first-number 32768 sum-number 32768;
 }
-section.addition input#check-first-15:checked ~ .first-labels label[for=check-first-15] {
+section.addition input#check-first-15:checked ~ table .first-labels label[for=check-first-15] {
   --is-one: 1;
+}
+section.addition input#check-first-15:checked ~ table .hexadecimal.first {
+  --bit-15-is-one: 1;
 }
 section.addition input#check-second-15:checked {
   counter-increment: second-number 32768 sum-number 32768;
 }
-section.addition input#check-second-15:checked ~ .second-labels label[for=check-second-15] {
+section.addition input#check-second-15:checked ~ table .second-labels label[for=check-second-15] {
   --is-one: 1;
 }
-section.addition .result-display {
+section.addition input#check-second-15:checked ~ table .hexadecimal.second {
+  --bit-15-is-one: 1;
+}
+section.addition :is(.result-display, .number-display.hexadecimal) {
   --check-16-sum: var(--check-15-carry);
 }
-section.addition .result-display > span span.show-check.check-15 {
+section.addition :is(.result-display, .number-display.hexadecimal) .show-check.check-15 {
   --is-one: var(--check-15-sum);
 }
-section.addition input#check-first-16:checked ~ input#check-second-16:checked ~ .result-display {
+section.addition input#check-first-16:checked ~ input#check-second-16:checked ~ table :is(.result-display, .number-display.hexadecimal) {
   --check-16-sum: calc(var(--check-15-carry));
   --check-16-carry: 1;
 }
-section.addition input#check-first-16:checked ~ input#check-second-16:not(:checked) ~ .result-display {
+section.addition input#check-first-16:checked ~ input#check-second-16:not(:checked) ~ table :is(.result-display, .number-display.hexadecimal) {
   --check-16-sum: calc(1 - var(--check-15-carry));
   --check-16-carry: calc(var(--check-15-carry));
 }
-section.addition input#check-first-16:not(:checked) ~ input#check-second-16:checked ~ .result-display {
+section.addition input#check-first-16:not(:checked) ~ input#check-second-16:checked ~ table :is(.result-display, .number-display.hexadecimal) {
   --check-16-sum: calc(1 - var(--check-15-carry));
   --check-16-carry: calc(var(--check-15-carry));
 }
-section.addition input#check-first-16:not(:checked) ~ input#check-second-16:not(:checked) ~ .result-display {
+section.addition input#check-first-16:not(:checked) ~ input#check-second-16:not(:checked) ~ table :is(.result-display, .number-display.hexadecimal) {
   --check-16-sum: calc(var(--check-15-carry));
   --check-16-carry: 0;
 }
 section.addition input#check-first-16:checked {
   counter-increment: first-number 65536 sum-number 65536;
 }
-section.addition input#check-first-16:checked ~ .first-labels label[for=check-first-16] {
+section.addition input#check-first-16:checked ~ table .first-labels label[for=check-first-16] {
   --is-one: 1;
+}
+section.addition input#check-first-16:checked ~ table .hexadecimal.first {
+  --bit-16-is-one: 1;
 }
 section.addition input#check-second-16:checked {
   counter-increment: second-number 65536 sum-number 65536;
 }
-section.addition input#check-second-16:checked ~ .second-labels label[for=check-second-16] {
+section.addition input#check-second-16:checked ~ table .second-labels label[for=check-second-16] {
   --is-one: 1;
 }
-section.addition .result-display {
+section.addition input#check-second-16:checked ~ table .hexadecimal.second {
+  --bit-16-is-one: 1;
+}
+section.addition :is(.result-display, .number-display.hexadecimal) {
   --check-16-sum: var(--check-15-carry);
 }
-section.addition .result-display > span span.show-check.check-16 {
+section.addition :is(.result-display, .number-display.hexadecimal) .show-check.check-16 {
   --is-one: var(--check-16-sum);
 }
 
-/*# sourceMappingURL=data:application/json;charset=utf-8,%7B%22version%22:3,%22sourceRoot%22:%22%22,%22sources%22:%5B%22style.scss%22%5D,%22names%22:%5B%5D,%22mappings%22:%22AAIA;EACC;;;AAGD;EACC;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;;AAEA;EACC;;;AASF;EACC;;;AAeD;EACC;EACA;EACA;;AAEA;EACC;EACA;EACA;;AAGD;EACC;EAEA;EACA;EACA;EAGC;;AAIF;EACC;;AAGD;EACC;;AAGD;EACC;;AAGD;EACC;EACA;EACA;;AAGD;EACC;EACA;EACA;;AAEA;EACC;EACA;EACA;;AAEA;EACC;EACA;EAEA;EACA;EACA;EACA;EACA;EACA;EAEA;;AAEA;EACC;EACA;EACA;EACA;EACA;EACA;;AACA;EACC;EACA;EACA;EACA;EACA;;AAIF;EACC;;AACA;EACC;;AAGF;EACC;;AAED;EACC;;AAED;EACC;;AAED;EACC;;AAED;EACC;;AAEA;EACC;;AAMF;EACC;;AAED;EACC;;AAcG;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAsBN;EACC;;AAGC;EACC;;AALH;EACC;;AAGC;EACC;;AAMJ;EACC;;AAGC;EACC;;AA5DG;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAsBN;EACC;;AAGC;EACC;;AALH;EACC;;AAGC;EACC;;AAMJ;EACC;;AAGC;EACC;;AA5DG;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAsBN;EACC;;AAGC;EACC;;AALH;EACC;;AAGC;EACC;;AAMJ;EACC;;AAGC;EACC;;AA5DG;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAsBN;EACC;;AAGC;EACC;;AALH;EACC;;AAGC;EACC;;AAMJ;EACC;;AAGC;EACC;;AA5DG;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAsBN;EACC;;AAGC;EACC;;AALH;EACC;;AAGC;EACC;;AAMJ;EACC;;AAGC;EACC;;AA5DG;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAsBN;EACC;;AAGC;EACC;;AALH;EACC;;AAGC;EACC;;AAMJ;EACC;;AAGC;EACC;;AA5DG;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAsBN;EACC;;AAGC;EACC;;AALH;EACC;;AAGC;EACC;;AAMJ;EACC;;AAGC;EACC;;AA5DG;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAsBN;EACC;;AAGC;EACC;;AALH;EACC;;AAGC;EACC;;AAMJ;EACC;;AAGC;EACC;;AA5DG;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAsBN;EACC;;AAGC;EACC;;AALH;EACC;;AAGC;EACC;;AAMJ;EACC;;AAGC;EACC;;AA5DG;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAsBN;EACC;;AAGC;EACC;;AALH;EACC;;AAGC;EACC;;AAMJ;EACC;;AAGC;EACC;;AA5DG;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAsBN;EACC;;AAGC;EACC;;AALH;EACC;;AAGC;EACC;;AAMJ;EACC;;AAGC;EACC;;AA5DG;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAsBN;EACC;;AAGC;EACC;;AALH;EACC;;AAGC;EACC;;AAMJ;EACC;;AAGC;EACC;;AA5DG;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAsBN;EACC;;AAGC;EACC;;AALH;EACC;;AAGC;EACC;;AAMJ;EACC;;AAGC;EACC;;AA5DG;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAsBN;EACC;;AAGC;EACC;;AALH;EACC;;AAGC;EACC;;AAMJ;EACC;;AAGC;EACC;;AA5DG;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAsBN;EACC;;AAGC;EACC;;AALH;EACC;;AAGC;EACC;;AAMJ;EACC;;AAGC;EACC;;AA5DG;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAsBN;EACC;;AAGC;EACC;;AALH;EACC;;AAGC;EACC;;AAMJ;EACC;;AAGC;EACC;;AA5DG;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAsBN;EACC;;AAGC;EACC;;AALH;EACC;;AAGC;EACC;;AAMJ;EACC;;AAGC;EACC%22,%22file%22:%22style.css%22%7D */
+/*# sourceMappingURL=data:application/json;charset=utf-8,%7B%22version%22:3,%22sourceRoot%22:%22%22,%22sources%22:%5B%22style.scss%22%5D,%22names%22:%5B%5D,%22mappings%22:%22AAIA;EACC;;;AAGD;EACC;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;;AAEA;EACC;;;AAIF;EACC;;;AAeD;EACC;EACA;;AAEA;EACC;EACA;;AAEC;EACC;;AAKH;AAAA;EAEC;EACA;EACA;;AAGC;AAAA;EACC;;AAGF;AAAA;EACC;EACA;;AAED;AAAA;EACC;EACA;EACA;EACA;;AAED;AAAA;EACC;;AAIF;EACC;;AAGD;EACC;;AAGD;EACC;;AAGD;EACC;EACA;EACA;;AAGD;EACC;EACA;EACA;;AAEA;EACC;EACA;EACA;;AAEA;EACC;EACA;EAEA;EACA;EACA;EACA;EACA;EACA;EAEA;;AAEA;EACC;EACA;EACA;EACA;EACA;EACA;;AACA;EACC;EACA;EACA;EACA;EACA;;AAIF;EACC;;AACA;EACC;;AAGF;EACC;;AAED;EACC;;AAED;EACC;;AAED;EACC;;AAED;EACC;;AAEA;EACC;;AAMF;EACC;;AAED;EACC;;AAMJ;EAEE;EAAA;EAAA;EAAA;EAAA;EAAA;EAAA;EAAA;EAAA;EAAA;EAAA;EAAA;EAAA;EAAA;EAAA;EAAA;;AACA;EACC;;AADD;EACC;;AADD;EACC;;AADD;EACC;;AADD;EACC;;AADD;EACC;;AADD;EACC;;AADD;EACC;;AADD;EACC;;AADD;EACC;;AADD;EACC;;AADD;EACC;;AADD;EACC;;AADD;EACC;;AADD;EACC;;AADD;EACC;;AAGF;EACC;EACA;EACA;EACA;;AAED;EACC;EACA;EACA;EACA;EACA;;AACA;EACC;EACA;EACA;;AAID;EACC;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;;AADD;EACC;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;;AADD;EACC;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;;AADD;EACC;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;;AAsBI;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;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%22,%22file%22:%22style.css%22%7D */

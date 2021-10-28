@@ -1,35 +1,94 @@
 
-link(rel="stylesheet" href="./style.css")
+<link rel="stylesheet" href="./style.css" />
 
 - const checkboxCount = 16;
 - const cubeSides = ["front", "back", "left", "right", "top", "bottom"];
+- const hexDigits = Math.ceil(checkboxCount / 4);
+- const hexChars = "0123456789abcdef";
 
-section.addition
+<section class="addition">
 	for row in ["first", "second"]
 		for val, i in Array(checkboxCount)
-			input(type="checkbox" id=`check-${row}-${checkboxCount - 1 - i}`)
+			<input type="checkbox" id="check-#{row}-#{checkboxCount - 1 - i}" />
+		//-}
+	//-}
 
-	for row, rowIdx in ["first", "second"]
-		.labels(class=`${row}-labels`)
-			span.wrapper: span.placeholder.cube
-				for cubeSide in cubeSides
-					div.side(class=cubeSide)
-			for val, i in Array(checkboxCount)
-				span.wrapper: label.cube(for=`check-${row}-${checkboxCount - 1 - i}`)
-					for cubeSide in cubeSides
-						div.side(class=cubeSide)
+	<table>
+		<thead>
+			<td>Binary</td>
+			<td>Decimal</td>
+			<td>Hexadecimal</td>
+		</thead>
+		for row, rowIdx in ["first", "second"]
+			<tr>
+				<td>
+					<div class="labels #{row}-labels">
+						<span class="wrapper">
+							<span class="placeholder cube">
+								for cubeSide in cubeSides
+									<div class="side #{cubeSide}"></div>
+								//-}
+							</span>
+						</span>
+						for val, i in Array(checkboxCount)
+							<span class="wrapper">
+								<label class="cube" for="check-#{row}-#{checkboxCount - 1 - i}">
+								for cubeSide in cubeSides
+									<div class="side #{cubeSide}"></div>
+								//-}
+								</label>
+							</span>
+						//-}
+					</div>
+				</td>
+				<td>
+					<div class="decimal number-display #{row}"></div>
+				</td>
+				<td>
+					<div class="hexadecimal number-display #{row}">
+						for val, hexDigit in Array(hexDigits)
+							<span class="hex-digit digit-#{hexDigits - hexDigit - 1}">
+								<span class="hex-chars">#{hexChars}</span>
+							</span>
+						//-}
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td class="operator">#{rowIdx ? "=" : "+"}</td>
+				<td class="operator">#{rowIdx ? "=" : "+"}</td>
+				<td class="operator">#{rowIdx ? "=" : "+"}</td>
+			</tr>
+		//-}
 
-		span.number-display(class=row)
-
-		.operator #{rowIdx ? "=" : "+"}
-
-	span.result-display
-		for val, i in Array(checkboxCount + 1)
-			span.wrapper: span.show-check.cube(class=`check-${checkboxCount - i}`)
-				for cubeSide in cubeSides
-					div.side(class=cubeSide)
-	
-	span.number-display.sum
-
+		<tr>
+			<td>
+				<span class="result-display">
+					for val, i in Array(checkboxCount + 1)
+						<span class="wrapper">
+							<span class="show-check cube check-#{checkboxCount - i}">
+								for cubeSide in cubeSides
+									<div class="side #{cubeSide}"></div>
+								//-}
+							</span>
+						</span>
+					//-}
+				</span>
+			</td>
+			<td>
+				<span class="decimal number-display sum"></span>
+			</td>
+			<td>
+				<span class="hexadecimal number-display sum">
+					for val, hexDigit in Array(hexDigits)
+						<span class="hex-digit digit-#{hexDigits - hexDigit - 1}">
+							<span class="hex-chars">#{hexChars}</span>
+						</span>
+					//-}
+				</span>
+			</td>
+		</tr>
+	</table>
+</section>
 
 
