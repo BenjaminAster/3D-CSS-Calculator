@@ -2,6 +2,7 @@
 link(rel="stylesheet" href="./style.css")
 
 - const checkboxCount = 16;
+- const cubeSides = ["front", "back", "left", "right", "top", "bottom"];
 
 section.addition
 	for row in ["first", "second"]
@@ -10,21 +11,13 @@ section.addition
 
 	for row, rowIdx in ["first", "second"]
 		.labels(class=`${row}-labels`)
-			span: span.placeholder
-				.side.front
-				.side.back
-				.side.left
-				.side.right
-				.side.top
-				.side.bottom
+			span.wrapper: span.placeholder.cube
+				for cubeSide in cubeSides
+					div.side(class=cubeSide)
 			for val, i in Array(checkboxCount)
-				span: label(for=`check-${row}-${checkboxCount - 1 - i}`)
-					.side.front
-					.side.back
-					.side.left
-					.side.right
-					.side.top
-					.side.bottom
+				span.wrapper: label.cube(for=`check-${row}-${checkboxCount - 1 - i}`)
+					for cubeSide in cubeSides
+						div.side(class=cubeSide)
 
 		span.number-display(class=row)
 
@@ -32,14 +25,11 @@ section.addition
 
 	span.result-display
 		for val, i in Array(checkboxCount + 1)
-			span: span.show-check(class=`check-${checkboxCount - i}`)
-				.side.front
-				.side.back
-				.side.left
-				.side.right
-				.side.top
-				.side.bottom
+			span.wrapper: span.show-check.cube(class=`check-${checkboxCount - i}`)
+				for cubeSide in cubeSides
+					div.side(class=cubeSide)
 	
 	span.number-display.sum
+
 
 

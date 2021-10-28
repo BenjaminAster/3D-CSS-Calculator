@@ -5,12 +5,15 @@
 body {
   font-family: sans-serif;
   background-color: black;
-  font-size: 1.5vw;
-  perspective: 30em;
+  min-height: 100vh;
+  font-size: min(1.5vw, 3vh);
+  perspective: 25em;
   perspective-origin: 50% calc(50% - 2em);
+  margin: 0;
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
 }
 body * {
   transform-style: preserve-3d;
@@ -28,10 +31,12 @@ section.addition {
 section.addition .operator {
   font-weight: bold;
   font-size: 2em;
+  color: white;
 }
 section.addition .number-display {
   font-weight: bold;
   position: absolute;
+  color: white;
   transform: translateZ(1em);
   padding-left: 0.4em;
 }
@@ -49,35 +54,28 @@ section.addition input[type=checkbox] {
   z-index: -1;
   visibility: hidden;
 }
-section.addition .labels {
+section.addition :is(.result-display, .labels) {
   display: inline-flex;
   flex-wrap: wrap;
   gap: 1em;
 }
-section.addition .labels > span {
+section.addition :is(.result-display, .labels) .wrapper {
   display: inline-block;
   width: 2em;
   height: 2em;
 }
-section.addition .labels > span label[for],
-section.addition .labels > span .placeholder {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+section.addition :is(.result-display, .labels) .wrapper .cube {
+  display: inline-block;
   --global-transform: rotateX(calc(var(--is-one) * 90deg));
-  --is-one: 0;
-  padding: 1em;
   width: 2em;
   height: 2em;
   color: black;
+  font-weight: bold;
+  font-family: monospace;
+  padding: 1em;
+  --is-one: 0;
 }
-section.addition .labels > span label[for] .front::before {
-  content: "0";
-}
-section.addition .labels > span label[for] .bottom::before {
-  content: "1";
-}
-section.addition .labels > span .side {
+section.addition :is(.result-display, .labels) .wrapper .cube .side {
   position: absolute;
   width: 2em;
   height: 2em;
@@ -85,96 +83,42 @@ section.addition .labels > span .side {
   box-shadow: 0 0 0.5em #000a inset;
   transition: transform 250ms ease-in-out;
 }
-section.addition .labels > span .side::before {
+section.addition :is(.result-display, .labels) .wrapper .cube .side::before {
   width: 100%;
   height: 100%;
-  color: black;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-section.addition .labels > span .front {
+section.addition :is(.result-display, .labels) .wrapper .cube .front {
   transform: var(--global-transform) translateZ(1em);
 }
-section.addition .labels > span .right {
-  transform: var(--global-transform) rotateY(90deg) translateZ(1em);
-}
-section.addition .labels > span .back {
-  transform: var(--global-transform) rotateY(180deg) translateZ(1em);
-}
-section.addition .labels > span .left {
-  transform: var(--global-transform) rotateY(-90deg) translateZ(1em);
-}
-section.addition .labels > span .top {
-  transform: var(--global-transform) translateY(-1em) rotateX(90deg);
-}
-section.addition .labels > span .bottom {
-  transform: var(--global-transform) translateY(1em) rotateX(90deg) rotateZ(180deg) rotateY(180deg);
-}
-section.addition .result-display {
-  --col-bg: white;
-  --col-fg: black;
-  display: inline-flex;
-  flex-wrap: wrap;
-  gap: 1em;
-}
-section.addition .result-display > span {
-  display: inline-block;
-  width: 2em;
-  height: 2em;
-}
-section.addition .result-display > span span.show-check {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 2em;
-  height: 2em;
-  color: black;
-  padding: 1em;
-  --is-one: 0;
-  width: 2em;
-  height: 2em;
-}
-section.addition .result-display > span span.show-check .side {
-  position: absolute;
-  width: 2em;
-  height: 2em;
-  background: rgba(173, 216, 230, 0.6);
-  box-shadow: 0 0 0.5em #000a inset;
-  --global-transform: rotateX(calc(var(--is-one) * 90deg));
-  transition: transform 250ms ease-in-out;
-}
-section.addition .result-display > span span.show-check .side::before {
-  width: 100%;
-  height: 100%;
-  color: black;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-section.addition .result-display > span span.show-check .front {
-  transform: var(--global-transform) translateZ(1em);
-}
-section.addition .result-display > span span.show-check .front::before {
+section.addition :is(.result-display, .labels) .wrapper .cube .front::before {
   content: "0";
 }
-section.addition .result-display > span span.show-check .right {
+section.addition :is(.result-display, .labels) .wrapper .cube .right {
   transform: var(--global-transform) rotateY(90deg) translateZ(1em);
 }
-section.addition .result-display > span span.show-check .back {
+section.addition :is(.result-display, .labels) .wrapper .cube .back {
   transform: var(--global-transform) rotateY(180deg) translateZ(1em);
 }
-section.addition .result-display > span span.show-check .left {
+section.addition :is(.result-display, .labels) .wrapper .cube .left {
   transform: var(--global-transform) rotateY(-90deg) translateZ(1em);
 }
-section.addition .result-display > span span.show-check .top {
+section.addition :is(.result-display, .labels) .wrapper .cube .top {
   transform: var(--global-transform) translateY(-1em) rotateX(90deg);
 }
-section.addition .result-display > span span.show-check .bottom {
+section.addition :is(.result-display, .labels) .wrapper .cube .bottom {
   transform: var(--global-transform) translateY(1em) rotateX(90deg) rotateZ(180deg) rotateY(180deg);
 }
-section.addition .result-display > span span.show-check .bottom::before {
+section.addition :is(.result-display, .labels) .wrapper .cube .bottom::before {
   content: "1";
+}
+section.addition :is(.result-display, .labels) .wrapper .placeholder .front::before {
+  content: "";
+}
+section.addition :is(.result-display, .labels) .wrapper .placeholder .bottom::before {
+  content: "";
 }
 section.addition input#check-first-0:checked ~ input#check-second-0:checked ~ .result-display {
   --check-0-sum: 0;
@@ -755,4 +699,4 @@ section.addition .result-display > span span.show-check.check-16 {
   --is-one: var(--check-16-sum);
 }
 
-/*# sourceMappingURL=data:application/json;charset=utf-8,%7B%22version%22:3,%22sourceRoot%22:%22%22,%22sources%22:%5B%22style.scss%22%5D,%22names%22:%5B%5D,%22mappings%22:%22AAIA;EACC;;;AAGD;EACC;EACA;EAEA;EACA;EAEA;EAGA;EACA;EACA;;AAGA;EACC;;;AASF;EACC;;;AAeD;EACC;EACA;EACA;;AAEA;EACC;EACA;;AAGD;EACC;EAEA;EACA;EAGC;;AAIF;EACC;;AAGD;EACC;;AAGD;EACC;;AAGD;EACC;EACA;EACA;;AAGD;EACC;EACA;EACA;;AAEA;EACC;EAEA;EACA;;AAEA;AAAA;EAEC;EACA;EACA;EACA;EAEA;EACA;EAEA;EACA;EAEA;;AAIA;EACC;;AAED;EACC;;AAIF;EACC;EACA;EACA;EACA;EACA;EACA;;AACA;EACC;EACA;EACA;EACA;EACA;EACA;;AAIF;EACC;;AAED;EACC;;AAED;EACC;;AAED;EACC;;AAED;EACC;;AAED;EACC;;AAMH;EACC;EACA;EAEA;EACA;EACA;;AAEA;EACC;EACA;EACA;;AAEA;EACC;EACA;EACA;EAEA;EACA;EACA;EACA;EAEA;EACA;EACA;;AAEA;EACC;EACA;EACA;EACA;EACA;EACA;EACA;;AACA;EACC;EACA;EACA;EACA;EACA;EACA;;AAIF;EACC;;AACA;EACC;;AAGF;EACC;;AAED;EACC;;AAED;EACC;;AAED;EACC;;AAED;EACC;;AAEA;EACC;;AAeE;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAsBN;EACC;;AAGC;EACC;;AALH;EACC;;AAGC;EACC;;AAMJ;EACC;;AAGC;EACC;;AA5DG;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAsBN;EACC;;AAGC;EACC;;AALH;EACC;;AAGC;EACC;;AAMJ;EACC;;AAGC;EACC;;AA5DG;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAsBN;EACC;;AAGC;EACC;;AALH;EACC;;AAGC;EACC;;AAMJ;EACC;;AAGC;EACC;;AA5DG;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAsBN;EACC;;AAGC;EACC;;AALH;EACC;;AAGC;EACC;;AAMJ;EACC;;AAGC;EACC;;AA5DG;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAsBN;EACC;;AAGC;EACC;;AALH;EACC;;AAGC;EACC;;AAMJ;EACC;;AAGC;EACC;;AA5DG;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAsBN;EACC;;AAGC;EACC;;AALH;EACC;;AAGC;EACC;;AAMJ;EACC;;AAGC;EACC;;AA5DG;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAsBN;EACC;;AAGC;EACC;;AALH;EACC;;AAGC;EACC;;AAMJ;EACC;;AAGC;EACC;;AA5DG;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAsBN;EACC;;AAGC;EACC;;AALH;EACC;;AAGC;EACC;;AAMJ;EACC;;AAGC;EACC;;AA5DG;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAsBN;EACC;;AAGC;EACC;;AALH;EACC;;AAGC;EACC;;AAMJ;EACC;;AAGC;EACC;;AA5DG;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAsBN;EACC;;AAGC;EACC;;AALH;EACC;;AAGC;EACC;;AAMJ;EACC;;AAGC;EACC;;AA5DG;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAsBN;EACC;;AAGC;EACC;;AALH;EACC;;AAGC;EACC;;AAMJ;EACC;;AAGC;EACC;;AA5DG;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAsBN;EACC;;AAGC;EACC;;AALH;EACC;;AAGC;EACC;;AAMJ;EACC;;AAGC;EACC;;AA5DG;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAsBN;EACC;;AAGC;EACC;;AALH;EACC;;AAGC;EACC;;AAMJ;EACC;;AAGC;EACC;;AA5DG;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAsBN;EACC;;AAGC;EACC;;AALH;EACC;;AAGC;EACC;;AAMJ;EACC;;AAGC;EACC;;AA5DG;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAsBN;EACC;;AAGC;EACC;;AALH;EACC;;AAGC;EACC;;AAMJ;EACC;;AAGC;EACC;;AA5DG;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAsBN;EACC;;AAGC;EACC;;AALH;EACC;;AAGC;EACC;;AAMJ;EACC;;AAGC;EACC;;AA5DG;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAsBN;EACC;;AAGC;EACC;;AALH;EACC;;AAGC;EACC;;AAMJ;EACC;;AAGC;EACC%22,%22file%22:%22style.css%22%7D */
+/*# sourceMappingURL=data:application/json;charset=utf-8,%7B%22version%22:3,%22sourceRoot%22:%22%22,%22sources%22:%5B%22style.scss%22%5D,%22names%22:%5B%5D,%22mappings%22:%22AAIA;EACC;;;AAGD;EACC;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;;AAEA;EACC;;;AASF;EACC;;;AAeD;EACC;EACA;EACA;;AAEA;EACC;EACA;EACA;;AAGD;EACC;EAEA;EACA;EACA;EAGC;;AAIF;EACC;;AAGD;EACC;;AAGD;EACC;;AAGD;EACC;EACA;EACA;;AAGD;EACC;EACA;EACA;;AAEA;EACC;EACA;EACA;;AAEA;EACC;EACA;EAEA;EACA;EACA;EACA;EACA;EACA;EAEA;;AAEA;EACC;EACA;EACA;EACA;EACA;EACA;;AACA;EACC;EACA;EACA;EACA;EACA;;AAIF;EACC;;AACA;EACC;;AAGF;EACC;;AAED;EACC;;AAED;EACC;;AAED;EACC;;AAED;EACC;;AAEA;EACC;;AAMF;EACC;;AAED;EACC;;AAcG;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAsBN;EACC;;AAGC;EACC;;AALH;EACC;;AAGC;EACC;;AAMJ;EACC;;AAGC;EACC;;AA5DG;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAsBN;EACC;;AAGC;EACC;;AALH;EACC;;AAGC;EACC;;AAMJ;EACC;;AAGC;EACC;;AA5DG;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAsBN;EACC;;AAGC;EACC;;AALH;EACC;;AAGC;EACC;;AAMJ;EACC;;AAGC;EACC;;AA5DG;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAsBN;EACC;;AAGC;EACC;;AALH;EACC;;AAGC;EACC;;AAMJ;EACC;;AAGC;EACC;;AA5DG;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAsBN;EACC;;AAGC;EACC;;AALH;EACC;;AAGC;EACC;;AAMJ;EACC;;AAGC;EACC;;AA5DG;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAsBN;EACC;;AAGC;EACC;;AALH;EACC;;AAGC;EACC;;AAMJ;EACC;;AAGC;EACC;;AA5DG;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAsBN;EACC;;AAGC;EACC;;AALH;EACC;;AAGC;EACC;;AAMJ;EACC;;AAGC;EACC;;AA5DG;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAsBN;EACC;;AAGC;EACC;;AALH;EACC;;AAGC;EACC;;AAMJ;EACC;;AAGC;EACC;;AA5DG;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAsBN;EACC;;AAGC;EACC;;AALH;EACC;;AAGC;EACC;;AAMJ;EACC;;AAGC;EACC;;AA5DG;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAsBN;EACC;;AAGC;EACC;;AALH;EACC;;AAGC;EACC;;AAMJ;EACC;;AAGC;EACC;;AA5DG;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAsBN;EACC;;AAGC;EACC;;AALH;EACC;;AAGC;EACC;;AAMJ;EACC;;AAGC;EACC;;AA5DG;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAsBN;EACC;;AAGC;EACC;;AALH;EACC;;AAGC;EACC;;AAMJ;EACC;;AAGC;EACC;;AA5DG;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAsBN;EACC;;AAGC;EACC;;AALH;EACC;;AAGC;EACC;;AAMJ;EACC;;AAGC;EACC;;AA5DG;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAsBN;EACC;;AAGC;EACC;;AALH;EACC;;AAGC;EACC;;AAMJ;EACC;;AAGC;EACC;;AA5DG;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAsBN;EACC;;AAGC;EACC;;AALH;EACC;;AAGC;EACC;;AAMJ;EACC;;AAGC;EACC;;AA5DG;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAsBN;EACC;;AAGC;EACC;;AALH;EACC;;AAGC;EACC;;AAMJ;EACC;;AAGC;EACC;;AA5DG;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAtBD;EACC;EAqBA;;AAsBN;EACC;;AAGC;EACC;;AALH;EACC;;AAGC;EACC;;AAMJ;EACC;;AAGC;EACC%22,%22file%22:%22style.css%22%7D */
