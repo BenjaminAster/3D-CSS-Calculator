@@ -4,33 +4,6 @@ $checkboxCount: 16;
 $debug: false;
 $isCodepen: false;
 
-:root {
-	color-scheme: dark;
-	font-size: min(1.4vw, 2.8vh);
-}
-
-body {
-	font-family: sans-serif;
-	background-color: black;
-	min-height: 100vh;
-	min-width: 100vw;
-	perspective: 25em;
-	perspective-origin: 50% calc(50% - 2em);
-	margin: 0;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	overflow: hidden;
-
-	* {
-		transform-style: preserve-3d;
-	}
-}
-
-a {
-	color: lightSkyBlue;
-}
-
 @function pow($number, $exponent) {
 	$value: 1;
 
@@ -43,6 +16,79 @@ a {
 	@return $value;
 }
 
+:root {
+	color-scheme: dark;
+	font-size: min(1.4vw, 3.3vh);
+	overflow: hidden;
+
+	@if $debug {
+		border: 1px solid darkKhaki;
+	}
+}
+
+body {
+	font-family: sans-serif;
+	background-color: black;
+	perspective: 25em;
+	perspective-origin: 50% calc(50% - 2em);
+	margin: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+
+	min-height: 99vh;
+	min-width: 99vw;
+
+	@if $debug {
+		border: 1px solid sandyBrown;
+	}
+
+	* {
+		transform-style: preserve-3d;
+	}
+}
+
+main {
+	text-align: center;
+
+	@if $debug {
+		border: 1px solid paleGreen;
+	}
+}
+
+section.info {
+	a {
+		color: lightSkyBlue;
+	}
+
+	.no-javascript {
+		color: yellow;
+	}
+}
+
+footer {
+	// position: absolute;
+	// bottom: 0;
+
+	flex-grow: 1;
+	flex-basis: 1;
+	width: 100%;
+	text-align: center;
+	display: flex;
+	align-items: flex-end;
+	justify-content: center;
+
+	@if $debug {
+		border: 1px solid paleTurquoise;
+	}
+
+	a {
+		color: lightSkyBlue;
+		text-decoration: none;
+	}
+}
+
 section.addition {
 	counter-reset: first-number second-number sum-number 0;
 
@@ -52,9 +98,12 @@ section.addition {
 		background: transparent;
 		display: block;
 		width: 68rem;
-		padding-top: 4rem;
+		// padding-top: 4rem;
 		:is(thead, tbody) {
 			display: block;
+		}
+		@if $debug {
+			border: 1px solid darkSeaGreen;
 		}
 		thead,
 		tbody {
@@ -271,7 +320,11 @@ section.addition {
 				}
 			}
 		}
-		@for $hexDigit from 0 to (if($isCodepen, ceil($checkboxCount / 4), math.ceil(math.div($checkboxCount, 4)))) {
+		@for $hexDigit
+			from 0
+			to
+			(if($isCodepen, ceil($checkboxCount / 4), math.ceil(math.div($checkboxCount, 4))))
+		{
 			.digit-#{$hexDigit} {
 				--hex-digit: calc(
 					var(--bit-#{$hexDigit * 4 + 0}-is-one) *
