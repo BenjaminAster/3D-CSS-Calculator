@@ -2,6 +2,7 @@
 
 $checkboxCount: 16;
 $debug: false;
+$isCodepen: false;
 
 :root {
 	color-scheme: dark;
@@ -51,6 +52,7 @@ section.addition {
 		background: transparent;
 		display: block;
 		width: 68rem;
+		padding-top: 4rem;
 		:is(thead, tbody) {
 			display: block;
 		}
@@ -83,7 +85,7 @@ section.addition {
 			&.numbers {
 				height: 4em;
 				td:first-of-type {
-					transform: translateX(-1em) translateY(-1em) translateZ(-0.9em);
+					transform: translateX(-1em) translateY(if($isCodepen, 0, -1em)) translateZ(-0.9em);
 				}
 			}
 			&.operators {
@@ -269,7 +271,7 @@ section.addition {
 				}
 			}
 		}
-		@for $hexDigit from 0 to (math.ceil(math.div($checkboxCount, 4))) {
+		@for $hexDigit from 0 to (if($isCodepen, ceil($checkboxCount / 4), math.ceil(math.div($checkboxCount, 4)))) {
 			.digit-#{$hexDigit} {
 				--hex-digit: calc(
 					var(--bit-#{$hexDigit * 4 + 0}-is-one) *
