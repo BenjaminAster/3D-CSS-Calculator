@@ -1,16 +1,18 @@
 @use "sass:math";
 
 $checkboxCount: 16;
+$debug: false;
 
 :root {
 	color-scheme: dark;
+	font-size: min(1.4vw, 2.8vh);
 }
 
 body {
 	font-family: sans-serif;
 	background-color: black;
 	min-height: 100vh;
-	font-size: min(1.5vw, 3vh);
+	min-width: 100vw;
 	perspective: 25em;
 	perspective-origin: 50% calc(50% - 2em);
 	margin: 0;
@@ -42,36 +44,46 @@ a {
 
 section.addition {
 	counter-reset: first-number second-number sum-number 0;
-	user-select: none;
 
 	table {
 		font-size: inherit;
 		color: white;
 		background: transparent;
 		display: block;
+		width: 68rem;
 		:is(thead, tbody) {
 			display: block;
+		}
+		thead,
+		tbody {
+			display: block;
+		}
+		tbody {
+			user-select: none;
 		}
 		tr {
 			display: block;
 			color: white;
 			background: transparent;
-			border: 1px solid red;
+			@if $debug {
+				border: 1px solid red;
+			}
+			td {
+				padding: 0;
+				&:nth-of-type(1) {
+					width: 50rem;
+				}
+				&:nth-of-type(2) {
+					width: 8rem;
+				}
+				&:nth-of-type(3) {
+					width: 8rem;
+				}
+			}
 			&.numbers {
 				height: 4em;
 				td:first-of-type {
 					transform: translateX(-1em) translateY(-1em) translateZ(-0.9em);
-				}
-				&.sum {
-					td {
-						&:first-of-type {
-							transform: translateX(-1em) translateY(0) translateZ(-0.9em);
-						}
-						&:nth-of-type(2) {
-							width: 3em;
-							height: 3em;
-						}
-					}
 				}
 			}
 			&.operators {
@@ -79,7 +91,9 @@ section.addition {
 			}
 			td {
 				display: inline-block;
-				border: 1px solid aqua;
+				@if $debug {
+					border: 1px solid aqua;
+				}
 				color: white;
 				background: transparent;
 				text-align: center;
@@ -95,6 +109,13 @@ section.addition {
 		&.decimal {
 			&::before {
 				position: absolute;
+				inset: 0;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				@if $debug {
+					border: 1px dotted yellow;
+				}
 			}
 		}
 		&.operator {
@@ -104,17 +125,16 @@ section.addition {
 		&.number-display {
 			width: 100%;
 			height: 100%;
-			transform: translateY(0.4em);
-			min-width: 5em;
+			// transform: translateY(0.4em);
+			// min-width: 5em;
 		}
 		&.sum {
-			transform: translateY(4em);
+			// transform: translateY(4em);
 		}
 	}
 
 	@each $row in ("first", "second", "sum") {
 		.decimal.#{$row}::before {
-			border: 1px dotted yellow;
 			content: counter(#{$row}-number);
 		}
 	}
@@ -209,13 +229,26 @@ section.addition {
 				--bit-#{$i}-is-one: var(--check-#{$i}-sum);
 			}
 		}
-		border: 1px solid lime;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		@if $debug {
+			border: 1px solid lime;
+		}
+		// height: 7em;
+		// width: 100%;
 		&.sum::before {
 			counter-reset: highest-sum-bit var(--check-#{$checkboxCount}-sum);
 			content: counter(highest-sum-bit);
 			position: absolute;
-			transform: translateX(-1ch);
-			border: 1px dotted magenta;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			inset: 0;
+			transform: translateX(-2.5ch) translateY(0.2ch);
+			@if $debug {
+				border: 1px dotted magenta;
+			}
 		}
 		.hex-digit {
 			font-family: monospace;
@@ -223,11 +256,17 @@ section.addition {
 			height: 1em;
 			width: 1ch;
 			clip-path: inset(0);
-			border: 1px solid orange;
+			@if $debug {
+				border: 1px solid orange;
+			}
 			.hex-chars {
 				position: absolute;
 				left: 0;
-				transform: translateX(calc(-1ch * var(--hex-digit)));
+				transition: transform 0.3s;
+				transform: translateY(calc(-2em * var(--hex-digit)));
+				div {
+					height: 2em;
+				}
 			}
 		}
 		@for $hexDigit from 0 to (math.ceil(math.div($checkboxCount, 4))) {
@@ -254,7 +293,7 @@ section.addition {
 					& ~ input#check-second-#{$i} {
 						@each $isSecondChecked in (true, false) {
 							&#{if($isSecondChecked, ":checked", ":not(:checked)")} {
-								& ~ table :is(.result-display, .number-display.hexadecimal) {
+								& ~ table :is(.result-display, .number-display.hexadecimal.sum) {
 									--check-#{$i}-sum: #{if(
 											$isFirstBox,
 											if(
@@ -313,7 +352,7 @@ section.addition {
 			}
 		}
 
-		:is(.result-display, .number-display.hexadecimal) {
+		:is(.result-display, .number-display.hexadecimal.sum) {
 			--check-#{$checkboxCount}-sum: var(--check-#{$checkboxCount - 1}-carry);
 
 			.show-check.check-#{$i} {

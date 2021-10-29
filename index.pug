@@ -6,7 +6,7 @@
 - const checkboxCount = 16;
 - const cubeSides = ["front", "back", "left", "right", "top", "bottom"];
 - const hexDigits = Math.ceil(checkboxCount / 4);
-- const hexChars = "0123456789abcdef";
+- const hexCharsHTML = "0123456789abcdef".split("").map(c=>`<div>${c}</div>`).join("");
 
 <section class="addition">
 	for row in ["first", "second"]
@@ -53,7 +53,7 @@
 						<div class="hexadecimal number-display #{row}">
 							for val, hexDigit in Array(hexDigits)
 								<span class="hex-digit digit-#{hexDigits - hexDigit - 1}">
-									<span class="hex-chars">#{hexChars}</span>
+									<span class="hex-chars">!{hexCharsHTML}</span>
 								</span>
 							//-}
 						</div>
@@ -68,7 +68,7 @@
 
 			<tr class="numbers sum">
 				<td>
-					<span class="result-display">
+					<div class="result-display">
 						for val, i in Array(checkboxCount + 1)
 							<span class="wrapper">
 								<span class="show-check cube check-#{checkboxCount - i}">
@@ -78,23 +78,21 @@
 								</span>
 							</span>
 						//-}
-					</span>
+					</div>
 				</td>
 				<td>
-					<span class="decimal number-display sum"></span>
+					<div class="decimal number-display sum"></div>
 				</td>
 				<td>
-					<span class="hexadecimal number-display sum">
+					<div class="hexadecimal number-display sum">
 						for val, hexDigit in Array(hexDigits)
 							<span class="hex-digit digit-#{hexDigits - hexDigit - 1}">
-								<span class="hex-chars">#{hexChars}</span>
+								<span class="hex-chars">!{hexCharsHTML}</span>
 							</span>
 						//-}
-					</span>
+					</div>
 				</td>
 			</tr>
 		</tbody>
 	</table>
 </section>
-
-
