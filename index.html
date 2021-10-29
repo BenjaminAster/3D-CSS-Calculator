@@ -1,9 +1,14 @@
+<meta charset="UTF-8" />
+<title>3D Binary CSS Calculator</title>
 <link rel="stylesheet" href="./style.css" /><section class="addition"><input type="checkbox" id="check-first-15" /><input type="checkbox" id="check-first-14" /><input type="checkbox" id="check-first-13" /><input type="checkbox" id="check-first-12" /><input type="checkbox" id="check-first-11" /><input type="checkbox" id="check-first-10" /><input type="checkbox" id="check-first-9" /><input type="checkbox" id="check-first-8" /><input type="checkbox" id="check-first-7" /><input type="checkbox" id="check-first-6" /><input type="checkbox" id="check-first-5" /><input type="checkbox" id="check-first-4" /><input type="checkbox" id="check-first-3" /><input type="checkbox" id="check-first-2" /><input type="checkbox" id="check-first-1" /><input type="checkbox" id="check-first-0" /><input type="checkbox" id="check-second-15" /><input type="checkbox" id="check-second-14" /><input type="checkbox" id="check-second-13" /><input type="checkbox" id="check-second-12" /><input type="checkbox" id="check-second-11" /><input type="checkbox" id="check-second-10" /><input type="checkbox" id="check-second-9" /><input type="checkbox" id="check-second-8" /><input type="checkbox" id="check-second-7" /><input type="checkbox" id="check-second-6" /><input type="checkbox" id="check-second-5" /><input type="checkbox" id="check-second-4" /><input type="checkbox" id="check-second-3" /><input type="checkbox" id="check-second-2" /><input type="checkbox" id="check-second-1" /><input type="checkbox" id="check-second-0" /><table>
 <thead>
+<tr>
 <td>Binary</td>
 <td>Decimal</td>
 <td>Hexadecimal</td>
-</thead><tr>
+</tr>
+</thead>
+<tbody><tr class="numbers">
 <td>
 <div class="labels first-labels">
 <span class="wrapper">
@@ -57,11 +62,11 @@
 </span></div>
 </td>
 </tr>
-<tr>
+<tr class="operators plus">
 <td class="operator">+</td>
 <td class="operator">+</td>
 <td class="operator">+</td>
-</tr><tr>
+</tr><tr class="numbers">
 <td>
 <div class="labels second-labels">
 <span class="wrapper">
@@ -115,11 +120,11 @@
 </span></div>
 </td>
 </tr>
-<tr>
+<tr class="operators equals">
 <td class="operator">=</td>
 <td class="operator">=</td>
 <td class="operator">=</td>
-</tr><tr>
+</tr><tr class="numbers sum">
 <td>
 <span class="result-display"><span class="wrapper">
 <span class="show-check cube check-16"><div class="side front"></div><div class="side back"></div><div class="side left"></div><div class="side right"></div><div class="side top"></div><div class="side bottom"></div></span>
@@ -172,5 +177,6 @@
 </span></span>
 </td>
 </tr>
+</tbody>
 </table>
 </section>

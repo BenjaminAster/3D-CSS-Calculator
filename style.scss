@@ -47,15 +47,47 @@ section.addition {
 	table {
 		font-size: inherit;
 		color: white;
+		background: transparent;
+		display: block;
+		:is(thead, tbody) {
+			display: block;
+		}
 		tr {
+			display: block;
+			color: white;
+			background: transparent;
+			border: 1px solid red;
+			&.numbers {
+				height: 4em;
+				td:first-of-type {
+					transform: translateX(-1em) translateY(-1em) translateZ(-0.9em);
+				}
+				&.sum {
+					td {
+						&:first-of-type {
+							transform: translateX(-1em) translateY(0) translateZ(-0.9em);
+						}
+						&:nth-of-type(2) {
+							width: 3em;
+							height: 3em;
+						}
+					}
+				}
+			}
+			&.operators {
+				height: 1em;
+			}
 			td {
+				display: inline-block;
+				border: 1px solid aqua;
+				color: white;
+				background: transparent;
 				text-align: center;
 			}
 		}
 	}
 
-	.operator,
-	.number-display {
+	:is(.operator, .number-display) {
 		font-weight: bold;
 		font-family: monospace;
 		color: white;
@@ -66,7 +98,7 @@ section.addition {
 			}
 		}
 		&.operator {
-			transform: translateY(0.5em);
+			transform: translateY(-0.5em);
 			font-size: 2em;
 		}
 		&.number-display {
@@ -80,16 +112,11 @@ section.addition {
 		}
 	}
 
-	.decimal.first::before {
-		content: counter(first-number);
-	}
-
-	.decimal.second::before {
-		content: counter(second-number);
-	}
-
-	.decimal.sum::before {
-		content: counter(sum-number);
+	@each $row in ("first", "second", "sum") {
+		.decimal.#{$row}::before {
+			border: 1px dotted yellow;
+			content: counter(#{$row}-number);
+		}
 	}
 
 	input[type="checkbox"] {
@@ -182,11 +209,13 @@ section.addition {
 				--bit-#{$i}-is-one: var(--check-#{$i}-sum);
 			}
 		}
+		border: 1px solid lime;
 		&.sum::before {
 			counter-reset: highest-sum-bit var(--check-#{$checkboxCount}-sum);
 			content: counter(highest-sum-bit);
 			position: absolute;
 			transform: translateX(-1ch);
+			border: 1px dotted magenta;
 		}
 		.hex-digit {
 			font-family: monospace;
@@ -194,6 +223,7 @@ section.addition {
 			height: 1em;
 			width: 1ch;
 			clip-path: inset(0);
+			border: 1px solid orange;
 			.hex-chars {
 				position: absolute;
 				left: 0;

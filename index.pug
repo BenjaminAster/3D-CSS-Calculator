@@ -1,4 +1,6 @@
 
+<meta charset="UTF-8" />
+<title>3D Binary CSS Calculator</title>
 <link rel="stylesheet" href="./style.css" />
 
 - const checkboxCount = 16;
@@ -15,79 +17,83 @@
 
 	<table>
 		<thead>
-			<td>Binary</td>
-			<td>Decimal</td>
-			<td>Hexadecimal</td>
-		</thead>
-		for row, rowIdx in ["first", "second"]
 			<tr>
-				<td>
-					<div class="labels #{row}-labels">
-						<span class="wrapper">
-							<span class="placeholder cube">
-								for cubeSide in cubeSides
-									<div class="side #{cubeSide}"></div>
-								//-}
-							</span>
-						</span>
-						for val, i in Array(checkboxCount)
+				<td>Binary</td>
+				<td>Decimal</td>
+				<td>Hexadecimal</td>
+			</tr>
+		</thead>
+		<tbody>
+			for row, rowIdx in ["first", "second"]
+				<tr class="numbers">
+					<td>
+						<div class="labels #{row}-labels">
 							<span class="wrapper">
-								<label class="cube" for="check-#{row}-#{checkboxCount - 1 - i}">
-								for cubeSide in cubeSides
-									<div class="side #{cubeSide}"></div>
-								//-}
-								</label>
+								<span class="placeholder cube">
+									for cubeSide in cubeSides
+										<div class="side #{cubeSide}"></div>
+									//-}
+								</span>
+							</span>
+							for val, i in Array(checkboxCount)
+								<span class="wrapper">
+									<label class="cube" for="check-#{row}-#{checkboxCount - 1 - i}">
+									for cubeSide in cubeSides
+										<div class="side #{cubeSide}"></div>
+									//-}
+									</label>
+								</span>
+							//-}
+						</div>
+					</td>
+					<td>
+						<div class="decimal number-display #{row}"></div>
+					</td>
+					<td>
+						<div class="hexadecimal number-display #{row}">
+							for val, hexDigit in Array(hexDigits)
+								<span class="hex-digit digit-#{hexDigits - hexDigit - 1}">
+									<span class="hex-chars">#{hexChars}</span>
+								</span>
+							//-}
+						</div>
+					</td>
+				</tr>
+				<tr class="operators #{rowIdx ? 'equals' : 'plus'}">
+					<td class="operator">#{rowIdx ? "=" : "+"}</td>
+					<td class="operator">#{rowIdx ? "=" : "+"}</td>
+					<td class="operator">#{rowIdx ? "=" : "+"}</td>
+				</tr>
+			//-}
+
+			<tr class="numbers sum">
+				<td>
+					<span class="result-display">
+						for val, i in Array(checkboxCount + 1)
+							<span class="wrapper">
+								<span class="show-check cube check-#{checkboxCount - i}">
+									for cubeSide in cubeSides
+										<div class="side #{cubeSide}"></div>
+									//-}
+								</span>
 							</span>
 						//-}
-					</div>
+					</span>
 				</td>
 				<td>
-					<div class="decimal number-display #{row}"></div>
+					<span class="decimal number-display sum"></span>
 				</td>
 				<td>
-					<div class="hexadecimal number-display #{row}">
+					<span class="hexadecimal number-display sum">
 						for val, hexDigit in Array(hexDigits)
 							<span class="hex-digit digit-#{hexDigits - hexDigit - 1}">
 								<span class="hex-chars">#{hexChars}</span>
 							</span>
 						//-}
-					</div>
+					</span>
 				</td>
 			</tr>
-			<tr>
-				<td class="operator">#{rowIdx ? "=" : "+"}</td>
-				<td class="operator">#{rowIdx ? "=" : "+"}</td>
-				<td class="operator">#{rowIdx ? "=" : "+"}</td>
-			</tr>
-		//-}
-
-		<tr>
-			<td>
-				<span class="result-display">
-					for val, i in Array(checkboxCount + 1)
-						<span class="wrapper">
-							<span class="show-check cube check-#{checkboxCount - i}">
-								for cubeSide in cubeSides
-									<div class="side #{cubeSide}"></div>
-								//-}
-							</span>
-						</span>
-					//-}
-				</span>
-			</td>
-			<td>
-				<span class="decimal number-display sum"></span>
-			</td>
-			<td>
-				<span class="hexadecimal number-display sum">
-					for val, hexDigit in Array(hexDigits)
-						<span class="hex-digit digit-#{hexDigits - hexDigit - 1}">
-							<span class="hex-chars">#{hexChars}</span>
-						</span>
-					//-}
-				</span>
-			</td>
-		</tr>
+		</tbody>
 	</table>
 </section>
 
